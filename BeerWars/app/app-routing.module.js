@@ -6,17 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Angular';
+var router_1 = require("@angular/router");
+var profile_component_1 = require("./profile/profile.component");
+var routes = [
+    { path: '', redirectTo: '/', pathMatch: 'full' },
+    { path: 'profile', component: profile_component_1.ProfileComponent }
+];
+var AppRoutingModule = (function () {
+    function AppRoutingModule() {
     }
-    return AppComponent;
+    return AppRoutingModule;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'my-app',
-        templateUrl: './app/app.component.html'
+AppRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule.forRoot(routes)],
+        exports: [router_1.RouterModule]
     })
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], AppRoutingModule);
+exports.AppRoutingModule = AppRoutingModule;
+//# sourceMappingURL=app-routing.module.js.map

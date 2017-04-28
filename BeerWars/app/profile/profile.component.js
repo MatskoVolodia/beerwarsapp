@@ -6,17 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Angular';
+var ProfileComponent = (function () {
+    function ProfileComponent() {
     }
-    return AppComponent;
+    return ProfileComponent;
 }());
-AppComponent = __decorate([
+ProfileComponent = __decorate([
     core_1.Component({
-        selector: 'my-app',
-        templateUrl: './app/app.component.html'
+        selector: 'profile',
+        templateUrl: './app/profile/profile.component.html'
     })
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], ProfileComponent);
+exports.ProfileComponent = ProfileComponent;
+//# sourceMappingURL=profile.component.js.map
