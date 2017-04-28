@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BeerComponent } from './beer/beer.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { BeerComponent } from './beer/beer.component';
   declarations: [
       AppComponent,
       ProfileComponent,
-      BeerComponent
+      BeerComponent,
+      FeedComponent
   ],
   bootstrap:    [ AppComponent ]
 })

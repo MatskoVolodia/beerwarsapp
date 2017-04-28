@@ -1,0 +1,6 @@
+﻿<div class="jumbotron" *ngFor="let item of feedPosts">
+    <h3>{{item.User.Username}}</h3>
+    <h4>{{item.Text}}</h4>
+    <h4>{{item.BeerItem.BeerBrand.Name}} - {{item.BeerItem.Name}} ({{item.BeerRatingMark}})</h4>
+    <h4>{{item.DateTime}}</h4>
+</div>

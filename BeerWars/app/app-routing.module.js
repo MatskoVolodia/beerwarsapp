@@ -9,10 +9,12 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var profile_component_1 = require("./profile/profile.component");
 var beer_component_1 = require("./beer/beer.component");
+var feed_component_1 = require("./feed/feed.component");
 var routes = [
     { path: '', redirectTo: '/', pathMatch: 'full' },
     { path: 'profile', component: profile_component_1.ProfileComponent },
-    { path: 'beer', component: beer_component_1.BeerComponent }
+    { path: 'beer', component: beer_component_1.BeerComponent },
+    { path: 'feed', component: feed_component_1.FeedComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

@@ -15,6 +15,8 @@ namespace BeerWars.ViewModel
         BeerBrand MapBeerBrandViewModel(BeerBrandViewModel bbvm);
         BeerItemViewModel MapBeerItem(BeerItem beeritem);
         BeerItem MapBeerItemViewModel(BeerItemViewModel bivm);
+        PostViewModel MapPost(Post post);
+        Post MapPostViewModel(PostViewModel pvm);
     }
 
     public class Mapper : IMapper
@@ -76,6 +78,31 @@ namespace BeerWars.ViewModel
                 Role = uservm.Role,
                 UserPictureUrl = uservm.UserPictureUrl,
                 WarSide = uservm.WarSide
+            };
+        }
+
+        public PostViewModel MapPost(Post post)
+        {
+            return new PostViewModel()
+            {
+                BeerItem = MapBeerItem(post.BeerItem),
+                DateTime = post.DateTime,
+                BeerRatingMark = post.BeerRatingMark,
+                Guid = post.Guid,
+                Text = post.Text,
+                User = MapUser(post.User)
+            };
+        }
+
+        public Post MapPostViewModel(PostViewModel pvm)
+        {
+            return new Post()
+            {
+                BeerItem = MapBeerItemViewModel(pvm.BeerItem),
+                DateTime = pvm.DateTime,
+                BeerRatingMark = pvm.BeerRatingMark,
+                Text = pvm.Text,
+                User = MapUserViewModel(pvm.User)
             };
         }
     }

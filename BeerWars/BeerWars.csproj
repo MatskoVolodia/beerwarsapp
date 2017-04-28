@@ -145,6 +145,7 @@
   <ItemGroup>
     <Content Include="app\app.component.html" />
     <Content Include="app\beer\beer.component.html" />
+    <Content Include="app\feed\feed.component.html" />
     <Content Include="app\profile\profile.component.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -231,7 +232,10 @@
     <TypeScriptCompile Include="app\beer\beer.service.ts" />
     <TypeScriptCompile Include="app\entities\beerbrand.ts" />
     <TypeScriptCompile Include="app\entities\beeritem.ts" />
+    <TypeScriptCompile Include="app\entities\post.ts" />
     <TypeScriptCompile Include="app\entities\user.ts" />
+    <TypeScriptCompile Include="app\feed\feed.component.ts" />
+    <TypeScriptCompile Include="app\feed\feed.service.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\profile\profile.component.ts" />
     <TypeScriptCompile Include="app\profile\profile.service.ts" />

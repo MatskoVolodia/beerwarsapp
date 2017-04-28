@@ -48,7 +48,7 @@ namespace BeerWars.Controllers
         public JsonResult AddNewBeer(BeerItemViewModel bivm)
         {
             var beerItem = _mapper.MapBeerItemViewModel(bivm);
-            var brandId = _getInfoService.GetAllBeerBrands().Find(item => item.Name == bivm.BeerBrand.Name && item.LogoUrl == bivm.BeerBrand.LogoUrl)?.BeerBrandId;
+            var brandId = _getInfoService.GetIdOf(beerItem.BeerBrand);
             if(brandId != null)
             {
                 beerItem.BeerBrand = null;
@@ -57,6 +57,30 @@ namespace BeerWars.Controllers
             _highLevelManagementService.AddNewBeer(beerItem);
             bivm.Guid = beerItem.Guid;
             return Json(bivm, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetAllPosts()
+        {
+            var result = _getInfoService.GetAllPosts().Select(post => _mapper.MapPost(post));
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddNewPost(PostViewModel pvm)
+        {
+            var post = _mapper.MapPostViewModel(pvm);
+
+            post.UserId = (int)_getInfoService.GetIdOf(post.User);
+            post.User = null;
+
+            post.BeerItemId = (int)_getInfoService.GetIdOf(post.BeerItem);
+            post.BeerItem = null;
+
+            _highLevelManagementService.AddNewPost(post);
+            pvm.Guid = post.Guid;
+
+            return Json(pvm, JsonRequestBehavior.AllowGet);
         }
     }
 }
