@@ -9,8 +9,10 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var app_routing_module_1 = require("./app-routing.module");
+var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
 var profile_component_1 = require("./profile/profile.component");
+var beer_component_1 = require("./beer/beer.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -21,11 +23,13 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
-            app_routing_module_1.AppRoutingModule
+            app_routing_module_1.AppRoutingModule,
+            http_1.HttpModule
         ],
         declarations: [
             app_component_1.AppComponent,
-            profile_component_1.ProfileComponent
+            profile_component_1.ProfileComponent,
+            beer_component_1.BeerComponent
         ],
         bootstrap: [app_component_1.AppComponent]
     })

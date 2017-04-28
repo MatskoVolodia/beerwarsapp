@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace DAL.DataAccess
 {
-    public class BWDbInitializer : DropCreateDatabaseIfModelChanges<BWContext>
+    public class BWDbInitializer : CreateDatabaseIfNotExists<BWContext>
     {
         protected override void Seed(BWContext context)
         {

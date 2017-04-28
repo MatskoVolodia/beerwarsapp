@@ -11,6 +11,7 @@ namespace Services
     public interface IUserService
     {
         bool IsLoginDataCorrect(string name, string password);
+        User GetUserInformation(string username);
     }
 
     public class UserService : IUserService
@@ -24,5 +25,10 @@ namespace Services
 
         public bool IsLoginDataCorrect(string name, string password)
             => null != _userRepository.Get(user => user.Username == name && user.Password == password);
+
+        public User GetUserInformation(string username)
+        {
+            return _userRepository.Get(user => user.Username == username);
+        }
     }
 }

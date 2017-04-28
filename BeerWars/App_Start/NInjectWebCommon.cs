@@ -13,6 +13,7 @@ namespace BeerWars.App_Start
     using DAL.DataAccess;
     using System.Diagnostics;
     using Services;
+    using BeerWars.ViewModel;
 
     public static class NinjectWebCommon 
     {
@@ -71,6 +72,11 @@ namespace BeerWars.App_Start
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>)).InSingletonScope();
 
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
+            kernel.Bind<IGetInfoService>().To<GetInfoService>().InRequestScope();
+            kernel.Bind<IHighLevelManagementService>().To<HighLevelManagementService>().InRequestScope();
+
+            kernel.Bind<IMapper>().To<Mapper>().InRequestScope();
+
         }        
     }
 }

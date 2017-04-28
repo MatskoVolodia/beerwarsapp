@@ -1,0 +1,29 @@
+﻿<form class="form-horizontal" #dayReportForm="ngForm">
+    <input type="text" required placeholder="Enter brand name" [(ngModel)]="model.BeerBrand.Name" [ngModelOptions]="{standalone: true}"/>
+    <input type="url" required placeholder="Enter link of logo" [(ngModel)]="model.BeerBrand.LogoUrl" [ngModelOptions]="{standalone: true}"/>
+    <input type="text" required placeholder="Enter beer name" [(ngModel)]="model.Name" [ngModelOptions]="{standalone: true}"/>
+    <input type="text" required placeholder="Enter sort" [(ngModel)]="model.Sort" [ngModelOptions]="{standalone: true}"/>
+
+    <button type="submit" class="btn btn-success pull-left" (click)="addNewBeer()" >
+        Submit
+    </button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Brand name</th>
+            <th>Beer name</th>
+            <th>Beer sort</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of beerItems">
+            <td><img src="{{item.BeerBrand.LogoUrl}}" style="width:40px; height:40px"/></td>
+            <td>{{item.BeerBrand.Name}}</td>
+            <td>{{item.Name}}</td>
+            <td>{{item.Sort}}</td>
+        </tr>
+    </tbody>
+</table>
