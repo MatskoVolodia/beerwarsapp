@@ -29,7 +29,7 @@ var FeedComponent = (function () {
         console.log(this.model.DateTime);
         this.feedService.sendPost(this.model)
             .subscribe(function (item) {
-            _this.feedPosts.push(item);
+            _this.feedPosts.unshift(item);
             console.log('Post sent');
         });
     };

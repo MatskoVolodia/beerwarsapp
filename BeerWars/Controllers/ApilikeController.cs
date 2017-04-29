@@ -83,5 +83,13 @@ namespace BeerWars.Controllers
 
             return Json(pvm, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetCurrentUser()
+        {
+            var username = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = GetUserInformation(username);
+            return result;
+        }
     }
 }

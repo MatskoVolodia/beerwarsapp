@@ -170,7 +170,6 @@
     <Compile Include="App_Start\NInjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApilikeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -207,7 +206,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Apilike\" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +235,7 @@
     <TypeScriptCompile Include="app\feed\feed.component.ts" />
     <TypeScriptCompile Include="app\feed\feed.service.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\auth.service.ts" />
     <TypeScriptCompile Include="app\profile\profile.component.ts" />
     <TypeScriptCompile Include="app\profile\profile.service.ts" />
   </ItemGroup>

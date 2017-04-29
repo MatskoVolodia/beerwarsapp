@@ -35,7 +35,7 @@ export class FeedComponent implements OnInit {
         console.log(this.model.DateTime);
         this.feedService.sendPost(this.model)
             .subscribe(item => {
-                this.feedPosts.push(item);
+                this.feedPosts.unshift(item);
                 console.log('Post sent');
             });
     }
