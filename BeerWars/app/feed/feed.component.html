@@ -1,4 +1,16 @@
-﻿<div class="jumbotron" *ngFor="let item of feedPosts">
+﻿<form class="form-horizontal" #dayReportForm="ngForm">
+    <input type="text" required placeholder="Tell us how was it!" [(ngModel)]="model.Text" [ngModelOptions]="{standalone: true}" />
+    <input type="number" required placeholder="Rate it!" [(ngModel)]="model.BeerRatingMark" [ngModelOptions]="{standalone: true}" />
+    <select [(ngModel)]="model.BeerItem" [ngModelOptions]="{standalone: true}" >
+        <option *ngFor="let beer of beerItems" [ngValue]="beer">{{beer.Guid}}</option>
+    </select>
+
+    <button type="submit" class="btn btn-success pull-left" (click)="sendPost()">
+        Submit
+    </button>
+</form>
+
+<div class="jumbotron" *ngFor="let item of feedPosts">
     <h3>{{item.User.Username}}</h3>
     <h4>{{item.Text}}</h4>
     <h4>{{item.BeerItem.BeerBrand.Name}} - {{item.BeerItem.Name}} ({{item.BeerRatingMark}})</h4>

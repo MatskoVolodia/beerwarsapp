@@ -70,6 +70,7 @@ namespace BeerWars.Controllers
         public JsonResult AddNewPost(PostViewModel pvm)
         {
             var post = _mapper.MapPostViewModel(pvm);
+            post.BeerItem.Guid = pvm.BeerItem.Guid;
 
             post.UserId = (int)_getInfoService.GetIdOf(post.User);
             post.User = null;

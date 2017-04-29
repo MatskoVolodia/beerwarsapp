@@ -29,8 +29,8 @@ var BeerComponent = (function () {
         this.beerService.addNewBeer(this.model)
             .subscribe(function (item) {
             _this.beerItems.push(item);
+            console.log('Beer added');
         });
-        console.log('Beer added');
     };
     return BeerComponent;
 }());

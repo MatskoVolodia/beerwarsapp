@@ -14,4 +14,13 @@ export class FeedService {
         return this.http.get('Apilike/GetAllPosts')
             .map(res => <Post[]>res.json());
     }
+
+    sendPost(post: Post): Observable<Post> {
+        let bodyString = JSON.stringify(post);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers }); 
+
+        return this.http.post('Apilike/AddNewPost', bodyString, options)
+            .map((res: Response) => <Post>res.json());
+    }
 }

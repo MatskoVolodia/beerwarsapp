@@ -4,7 +4,7 @@ import { User } from './user';
 export class Post {
     Text: string;
     BeerRatingMark: number;
-    DateTime: string;
+    DateTime: Date;
     Guid: string;
     User: User;
     BeerItem: BeerItem;

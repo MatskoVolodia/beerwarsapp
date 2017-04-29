@@ -33,7 +33,7 @@ export class BeerComponent implements OnInit {
         this.beerService.addNewBeer(this.model)
             .subscribe(item => {
                 this.beerItems.push(item);
+                console.log('Beer added');
             });
-        console.log('Beer added');
     }
 }
