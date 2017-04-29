@@ -146,6 +146,16 @@
     <Content Include="app\app.component.html" />
     <Content Include="app\beer\beer.component.html" />
     <Content Include="app\feed\feed.component.html" />
+    <Content Include="app\icons\icon1.png" />
+    <Content Include="app\icons\icon10.png" />
+    <Content Include="app\icons\icon2.png" />
+    <Content Include="app\icons\icon3.png" />
+    <Content Include="app\icons\icon4.png" />
+    <Content Include="app\icons\icon5.png" />
+    <Content Include="app\icons\icon6.png" />
+    <Content Include="app\icons\icon7.png" />
+    <Content Include="app\icons\icon8.png" />
+    <Content Include="app\icons\icon9.png" />
     <Content Include="app\profile\profile.component.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

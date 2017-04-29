@@ -21,6 +21,7 @@ var AppComponent = (function () {
         this.authService.getCurrentUser()
             .subscribe(function (user) {
             _this.currentUser = user;
+            _this.currentUser.UserPictureUrl = 'app/icons/' + user.UserPictureUrl + '.png';
             console.log(_this.currentUser);
         });
     };

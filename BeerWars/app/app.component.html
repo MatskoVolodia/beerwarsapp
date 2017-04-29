@@ -1,6 +1,15 @@
-﻿<h3>{{currentUser.Username}}</h3>
-<a routerLink="/profile" routerLinkActive="active">Profile</a>
-<a routerLink="/beer" routerLinkActive="active">Beer</a>
-<a routerLink="/feed" routerLinkActive="active">Feed</a>
-<hr />
-<router-outlet></router-outlet>
+﻿<div class="left-side-menu col-md-2" style="padding: 0">
+    <div class="profile-summary col-md-12">
+        <img class="user-picture" [src]="currentUser.UserPictureUrl"/>
+        <h3 class="username">{{currentUser.Username}}</h3>
+    </div>
+    <ul>
+        <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+        <li><a routerLink="/beer" routerLinkActive="active">Beer</a></li>
+        <li><a routerLink="/feed" routerLinkActive="active">Feed</a></li>
+    </ul>
+   
+</div>
+<div class="page-content col-md-10">
+    <router-outlet></router-outlet>
+</div>

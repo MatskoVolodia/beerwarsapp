@@ -16,7 +16,7 @@ namespace DAL.DataAccess
             Debug.WriteLine("SEED");
 
             //Add admin user
-            context.Users.Add(new User { UserId = 1, Username = "admin", Password = "admin", WarSide = true, Role="admin", UserPictureUrl="./temp" });
+            context.Users.Add(new User { UserId = 1, Username = "admin", Password = "admin", WarSide = true, Role="admin", UserPictureUrl= "icon4" });
 
             base.Seed(context);
         }

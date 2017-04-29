@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
         this.authService.getCurrentUser()
             .subscribe(user => {
                 this.currentUser = user;
+                this.currentUser.UserPictureUrl = 'app/icons/' + user.UserPictureUrl + '.png';
                 console.log(this.currentUser);
             });
     }
