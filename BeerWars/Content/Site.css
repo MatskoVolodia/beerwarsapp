@@ -139,12 +139,6 @@ textarea {
     width: 60px;
 }
 
-.feed-item-comment, .feed-item-like {
-    color: #1A1D2A;
-    text-align: right;
-    cursor: pointer;
-}
-
 .option-span{
     cursor: pointer;
 }
@@ -169,4 +163,19 @@ input{
 
 .submit-item button{
     margin-top: 5px;
+}
+
+.feed-item-comment, .feed-item-like, .feed-item-dislike{
+    width: 25px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.feed-item-dislike{
+    transform: scaleY(-1);
+}
+
+.count-text {
+    font-size: large;
+    color: #1A1D2A;
 }

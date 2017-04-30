@@ -1,5 +1,6 @@
 ﻿using BeerWars.ViewModel;
 using ModelClasses;
+using ModelClasses.Entities;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,13 @@ namespace BeerWars.Controllers
         [HttpGet]
         public JsonResult GetAllPosts()
         {
-            var result = _getInfoService.GetAllPosts().Select(post => _mapper.MapPost(post));
+            var result = _getInfoService.GetAllPosts().Select(post => {
+                post.Likes = post.Likes.Select(like => { like.Post = null; return like; }).ToList();
+                post.Comments = post.Comments.Select(comment => { comment.Post = null; return comment; }).ToList();
+
+                var temp = _mapper.MapPost(post);
+                return temp;
+            });
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -92,6 +99,35 @@ namespace BeerWars.Controllers
             var username = System.Web.HttpContext.Current.User.Identity.Name;
             var result = GetUserInformation(username);
             return result;
+        }
+
+        [HttpPost]
+        public JsonResult Like(LikeViewModel lvm)
+        {
+            lvm.Post.Comments = new List<CommentViewModel>();
+            lvm.Post.Likes = new List<LikeViewModel>();
+            
+            var like = _mapper.MapLikeViewModel(lvm);
+            like.Post.Guid = lvm.Post.Guid;
+
+            like.UserId = (int)_getInfoService.GetIdOf(like.User);
+            like.User = null;
+
+            like.PostId = (int)_getInfoService.GetIdOf(like.Post);
+            like.Post = null;
+
+            _highLevelManagementService.Like(like);
+            lvm.Guid = like.Guid;
+
+            return Json(lvm, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Dislike(LikeViewModel lvm)
+        {
+            _highLevelManagementService.Dislike(lvm.Guid);
+
+            return Json(lvm, JsonRequestBehavior.AllowGet);
         }
     }
 }

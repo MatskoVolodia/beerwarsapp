@@ -8,6 +8,7 @@ import { AuthService } from '../auth.service';
 import { Post } from '../entities/post';
 import { BeerItem } from '../entities/beeritem';
 import { User } from '../entities/user';
+import { Like } from '../entities/like';
 
 @Component({
     selector: 'feed',
@@ -78,4 +79,30 @@ export class FeedComponent implements OnInit {
         return this._sanitizer.bypassSecurityTrustHtml(html);
     }
 
+    setLike(item: Post) {
+        let like: Like = new Like();
+        like.Post = item;
+        like.User = this.model.User;
+        this.feedService.setLike(like)
+            .subscribe((res) => {
+                item.Likes.push(res);
+            });
+    }
+
+    unsetLike(item: Post) {
+        let like: Like = new Like();
+        like.Post = item;
+        like.User = this.model.User;
+        like.Guid = item.Likes.find(like => like.User.Username == this.model.User.Username).Guid;
+        this.feedService.unsetLike(like)
+            .subscribe(res => {
+                item.Likes.splice(item.Likes.findIndex(itemlike => itemlike.Guid == res.Guid), 1);
+            })
+    }
+
+    isLiked(item: Post): boolean {
+        return this.feedPosts.find(post => post.Guid == item.Guid)
+            .Likes.some(like => like.User.Username == this.model.User.Username);
+    }
 }
+

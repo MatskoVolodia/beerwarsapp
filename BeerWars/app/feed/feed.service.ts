@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angul
 import { Observable } from 'rxjs/Observable';
 
 import { Post } from '../entities/post';
+import { Like } from '../entities/like';
 
 @Injectable()
 export class FeedService {
@@ -17,11 +18,28 @@ export class FeedService {
 
     sendPost(post: Post): Observable<Post> {
         let bodyString = JSON.stringify(post);
-        console.log(bodyString);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers }); 
 
         return this.http.post('Apilike/AddNewPost', bodyString, options)
             .map((res: Response) => <Post>res.json());
+    }
+
+    setLike(like: Like): Observable<Like> {
+        let bodyString = JSON.stringify(like);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('Apilike/Like', bodyString, options)
+            .map((res: Response) => <Like>res.json());
+    }
+
+    unsetLike(like: Like): Observable<Like> {
+        let bodyString = JSON.stringify(like);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('Apilike/Dislike', bodyString, options)
+            .map((res: Response) => <Like>res.json());
     }
 }

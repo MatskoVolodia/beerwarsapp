@@ -35,6 +35,9 @@
         <span>{{item.BeerItem.Name}}</span>
         <span class="rating-mark">{{item.BeerRatingMark}}</span>
     </div>
-    <span class="feed-item-comment">Comment ({{item.Comments.length}})</span>
-    <span class="feed-item-like">Like ({{item.Likes.length}})</span>
+    <img class="feed-item-comment" src="app/icons/comment.png" /> 
+    <span class="count-text">{{item.Comments.length}}</span>
+    <img class="feed-item-like" src='app/icons/like.png' *ngIf="!isLiked(item)" (click)="setLike(item)" /> 
+    <img class="feed-item-dislike" src='app/icons/like.png' *ngIf="isLiked(item)" (click)="unsetLike(item)" />
+    <span class="count-text">{{item.Likes.length}}</span>
 </div>

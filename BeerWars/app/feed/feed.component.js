@@ -15,6 +15,7 @@ var beer_service_1 = require("../beer/beer.service");
 var auth_service_1 = require("../auth.service");
 var post_1 = require("../entities/post");
 var beeritem_1 = require("../entities/beeritem");
+var like_1 = require("../entities/like");
 var FeedComponent = (function () {
     function FeedComponent(feedService, beerService, authService, _sanitizer) {
         var _this = this;
@@ -63,6 +64,31 @@ var FeedComponent = (function () {
         this.model.BeerItem = new beeritem_1.BeerItem();
         this.model.BeerItem.Name = "";
         this.model.BeerRatingMark = 1;
+    };
+    FeedComponent.prototype.setLike = function (item) {
+        var like = new like_1.Like();
+        like.Post = item;
+        like.User = this.model.User;
+        this.feedService.setLike(like)
+            .subscribe(function (res) {
+            item.Likes.push(res);
+        });
+    };
+    FeedComponent.prototype.unsetLike = function (item) {
+        var _this = this;
+        var like = new like_1.Like();
+        like.Post = item;
+        like.User = this.model.User;
+        like.Guid = item.Likes.find(function (like) { return like.User.Username == _this.model.User.Username; }).Guid;
+        this.feedService.unsetLike(like)
+            .subscribe(function (res) {
+            item.Likes.splice(item.Likes.findIndex(function (itemlike) { return itemlike.Guid == res.Guid; }), 1);
+        });
+    };
+    FeedComponent.prototype.isLiked = function (item) {
+        var _this = this;
+        return this.feedPosts.find(function (post) { return post.Guid == item.Guid; })
+            .Likes.some(function (like) { return like.User.Username == _this.model.User.Username; });
     };
     return FeedComponent;
 }());

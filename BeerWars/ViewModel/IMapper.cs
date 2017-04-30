@@ -104,13 +104,13 @@ namespace BeerWars.ViewModel
         {
             return new Post()
             {
-                BeerItem = MapBeerItemViewModel(pvm.BeerItem),
+                BeerItem = pvm.BeerItem == null ? null : MapBeerItemViewModel(pvm.BeerItem),
                 DateTime = pvm.DateTime,
                 BeerRatingMark = pvm.BeerRatingMark,
                 Text = pvm.Text,
-                User = MapUserViewModel(pvm.User),
-                Comments = pvm.Comments.Select(item => MapCommentViewModel(item)).ToList(),
-                Likes = pvm.Likes.Select(item => MapLikeViewModel(item)).ToList()
+                User = pvm.User == null ? null : MapUserViewModel(pvm.User),
+                Comments = pvm.Comments == null ? null : pvm.Comments.Select(item => MapCommentViewModel(item)).ToList(),
+                Likes = pvm.Likes == null ? null : pvm.Likes.Select(item => MapLikeViewModel(item)).ToList()
             };
         }
 
@@ -120,9 +120,9 @@ namespace BeerWars.ViewModel
             {
                 DateTime = comment.DateTime,
                 Guid = comment.Guid,
-                Post = MapPost(comment.Post),
+                Post = comment.Post == null ? null : MapPost(comment.Post),
                 Text = comment.Text,
-                User = MapUser(comment.User)
+                User = comment.User == null ? null : MapUser(comment.User)
             };
         }
 
@@ -131,9 +131,9 @@ namespace BeerWars.ViewModel
             return new Comment
             {
                 DateTime = cvm.DateTime,
-                Post = MapPostViewModel(cvm.Post),
+                Post = cvm.Post == null ? null : MapPostViewModel(cvm.Post),
                 Text = cvm.Text,
-                User = MapUserViewModel(cvm.User),
+                User = cvm.User == null ? null : MapUserViewModel(cvm.User),
             };
         }
 
@@ -141,8 +141,8 @@ namespace BeerWars.ViewModel
         {
             return new LikeViewModel
             {
-                Post = MapPost(like.Post),
-                User = MapUser(like.User),
+                Post = like.Post == null ? null : MapPost(like.Post),
+                User = like.User == null ? null : MapUser(like.User),
                 Guid = like.Guid
             };
         }
@@ -151,8 +151,8 @@ namespace BeerWars.ViewModel
         {
             return new Like
             {
-                Post = MapPostViewModel(lvm.Post),
-                User = MapUserViewModel(lvm.User)
+                Post = lvm.Post == null ? null : MapPostViewModel(lvm.Post),
+                User = lvm.User == null ? null : MapUserViewModel(lvm.User)
             };
         }
     }

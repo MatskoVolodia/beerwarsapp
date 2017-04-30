@@ -17,6 +17,8 @@ namespace Services
         int? GetIdOf(BeerBrand brand);
         int? GetIdOf(BeerItem beeritem);
         int? GetIdOf(User user);
+        int? GetIdOf(Post post);
+        int? GetIdOf(Like like);
     }
     public class GetInfoService : IGetInfoService
     { 
@@ -71,6 +73,16 @@ namespace Services
         public int? GetIdOf(User user)
         {
             return _userRepository.Get(item => item.Username == user.Username)?.UserId;
+        }
+
+        public int? GetIdOf(Post post)
+        {
+            return _postRepository.Get(item => item.Guid == post.Guid)?.PostId;
+        }
+
+        public int? GetIdOf(Like like)
+        {
+            return _likeRepository.Get(item => item.Guid == like.Guid)?.LikeId;
         }
     }
 }

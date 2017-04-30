@@ -20,10 +20,23 @@ var FeedService = (function () {
     };
     FeedService.prototype.sendPost = function (post) {
         var bodyString = JSON.stringify(post);
-        console.log(bodyString);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post('Apilike/AddNewPost', bodyString, options)
+            .map(function (res) { return res.json(); });
+    };
+    FeedService.prototype.setLike = function (like) {
+        var bodyString = JSON.stringify(like);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('Apilike/Like', bodyString, options)
+            .map(function (res) { return res.json(); });
+    };
+    FeedService.prototype.unsetLike = function (like) {
+        var bodyString = JSON.stringify(like);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('Apilike/Dislike', bodyString, options)
             .map(function (res) { return res.json(); });
     };
     return FeedService;
