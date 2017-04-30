@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { RatingModule } from "ngx-rating";
 
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -15,7 +17,9 @@ import { FeedComponent } from './feed/feed.component';
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        HttpModule
+        HttpModule,
+        NguiAutoCompleteModule,
+        RatingModule
     ],
   declarations: [
       AppComponent,

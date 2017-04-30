@@ -190,6 +190,7 @@
     <Compile Include="ViewModel\BeerItemViewModel.cs" />
     <Compile Include="ViewModel\CommentViewModel.cs" />
     <Compile Include="ViewModel\IMapper.cs" />
+    <Compile Include="ViewModel\LikeViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\PostViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
@@ -240,6 +241,8 @@
     <TypeScriptCompile Include="app\beer\beer.service.ts" />
     <TypeScriptCompile Include="app\entities\beerbrand.ts" />
     <TypeScriptCompile Include="app\entities\beeritem.ts" />
+    <TypeScriptCompile Include="app\entities\comment.ts" />
+    <TypeScriptCompile Include="app\entities\like.ts" />
     <TypeScriptCompile Include="app\entities\post.ts" />
     <TypeScriptCompile Include="app\entities\user.ts" />
     <TypeScriptCompile Include="app\feed\feed.component.ts" />

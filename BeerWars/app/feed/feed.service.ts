@@ -17,6 +17,7 @@ export class FeedService {
 
     sendPost(post: Post): Observable<Post> {
         let bodyString = JSON.stringify(post);
+        console.log(bodyString);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers }); 
 

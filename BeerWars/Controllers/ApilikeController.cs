@@ -69,6 +69,8 @@ namespace BeerWars.Controllers
         [HttpPost]
         public JsonResult AddNewPost(PostViewModel pvm)
         {
+            pvm.Comments = new List<CommentViewModel>();
+            pvm.Likes = new List<LikeViewModel>();
             var post = _mapper.MapPostViewModel(pvm);
             post.BeerItem.Guid = pvm.BeerItem.Guid;
 

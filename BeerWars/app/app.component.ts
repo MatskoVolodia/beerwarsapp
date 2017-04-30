@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.currentUser.UserPictureUrl = 'app/icons/default.png';
         this.authService.getCurrentUser()
             .subscribe(user => {
                 this.currentUser = user;

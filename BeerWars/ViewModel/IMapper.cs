@@ -17,6 +17,10 @@ namespace BeerWars.ViewModel
         BeerItem MapBeerItemViewModel(BeerItemViewModel bivm);
         PostViewModel MapPost(Post post);
         Post MapPostViewModel(PostViewModel pvm);
+        CommentViewModel MapComment(Comment comment);
+        Comment MapCommentViewModel(CommentViewModel cvm);
+        LikeViewModel MapLike(Like like);
+        Like MapLikeViewModel(LikeViewModel lvm);
     }
 
     public class Mapper : IMapper
@@ -90,7 +94,9 @@ namespace BeerWars.ViewModel
                 BeerRatingMark = post.BeerRatingMark,
                 Guid = post.Guid,
                 Text = post.Text,
-                User = MapUser(post.User)
+                User = MapUser(post.User),
+                Comments = post.Comments.Select(item => MapComment(item)).ToList(),
+                Likes = post.Likes.Select(item => MapLike(item)).ToList()
             };
         }
 
@@ -102,7 +108,51 @@ namespace BeerWars.ViewModel
                 DateTime = pvm.DateTime,
                 BeerRatingMark = pvm.BeerRatingMark,
                 Text = pvm.Text,
-                User = MapUserViewModel(pvm.User)
+                User = MapUserViewModel(pvm.User),
+                Comments = pvm.Comments.Select(item => MapCommentViewModel(item)).ToList(),
+                Likes = pvm.Likes.Select(item => MapLikeViewModel(item)).ToList()
+            };
+        }
+
+        public CommentViewModel MapComment(Comment comment)
+        {
+            return new CommentViewModel
+            {
+                DateTime = comment.DateTime,
+                Guid = comment.Guid,
+                Post = MapPost(comment.Post),
+                Text = comment.Text,
+                User = MapUser(comment.User)
+            };
+        }
+
+        public Comment MapCommentViewModel(CommentViewModel cvm)
+        {
+            return new Comment
+            {
+                DateTime = cvm.DateTime,
+                Post = MapPostViewModel(cvm.Post),
+                Text = cvm.Text,
+                User = MapUserViewModel(cvm.User),
+            };
+        }
+
+        public LikeViewModel MapLike(Like like)
+        {
+            return new LikeViewModel
+            {
+                Post = MapPost(like.Post),
+                User = MapUser(like.User),
+                Guid = like.Guid
+            };
+        }
+
+        public Like MapLikeViewModel(LikeViewModel lvm)
+        {
+            return new Like
+            {
+                Post = MapPostViewModel(lvm.Post),
+                User = MapUserViewModel(lvm.User)
             };
         }
     }

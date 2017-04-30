@@ -15,9 +15,11 @@ var AppComponent = (function () {
     function AppComponent(authService) {
         this.authService = authService;
         this.currentUser = new user_1.User();
+        this.appLoaded = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.currentUser.UserPictureUrl = 'app/icons/default.png';
         this.authService.getCurrentUser()
             .subscribe(function (user) {
             _this.currentUser = user;

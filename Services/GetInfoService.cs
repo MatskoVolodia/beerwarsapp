@@ -24,14 +24,23 @@ namespace Services
         private readonly IRepository<BeerBrand> _beerBrandRepository;
         private readonly IRepository<Post> _postRepository;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Comment> _commentRepository;
+        private readonly IRepository<Like> _likeRepository;
 
-        public GetInfoService(IRepository<BeerItem> beerItemRepository, IRepository<BeerBrand> beerBrandRepository, 
-            IRepository<Post> postRepository, IRepository<User> userRepository)
+        public GetInfoService(
+            IRepository<BeerItem> beerItemRepository, 
+            IRepository<BeerBrand> beerBrandRepository, 
+            IRepository<Post> postRepository, 
+            IRepository<User> userRepository,
+            IRepository<Comment> commentRepository,
+            IRepository<Like> likeRepository)
         {
             _beerItemRepository = beerItemRepository;
             _beerBrandRepository = beerBrandRepository;
             _postRepository = postRepository;
             _userRepository = userRepository;
+            _commentRepository = commentRepository;
+            _likeRepository = likeRepository;
         }
 
         public List<BeerBrand> GetAllBeerBrands()

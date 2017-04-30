@@ -1,19 +1,33 @@
-﻿<form class="form-horizontal" #dayReportForm="ngForm">
-    <input type="text" required placeholder="Tell us how was it!" [(ngModel)]="model.Text" [ngModelOptions]="{standalone: true}" />
-    <input type="number" required placeholder="Rate it!" [(ngModel)]="model.BeerRatingMark" [ngModelOptions]="{standalone: true}" />
-    <select [(ngModel)]="model.BeerItem" [ngModelOptions]="{standalone: true}" >
-        <option *ngFor="let beer of beerItems" [ngValue]="beer">{{beer.Guid}}</option>
-    </select>
+﻿<div class="feed-item submit-item">
+    <form class="form-horizontal" #dayReportForm="ngForm">
+        <input type="text" class="form-control" required placeholder="Tell us how it was!" [(ngModel)]="model.Text" [ngModelOptions]="{standalone: true}" />
+        <input auto-complete
+               [source]="beerItems"
+               [(ngModel)]="model.BeerItem"
+               [ngModelOptions]="{standalone: true}"
+               [list-formatter]="autocompleListFormatter"
+               display-property-name="Name"
+               class="form-control"
+               placeholder="What beer?" />
 
-    <button type="submit" class="btn btn-success pull-left" (click)="sendPost()">
-        Submit
-    </button>
-</form>
+        <rating [(ngModel)]="model.BeerRatingMark" [max]="10"
+                [readonly]="false"
+                [disabled]="false"
+                [required]="true"
+                [ngModelOptions]="{standalone: true}">
+        </rating>
+
+        <button type="submit" class="btn btn-success pull-right" (click)="sendPost()">
+            Send post
+        </button>
+    </form>
+</div>
+
 <hr />
 <div class="feed-item" *ngFor="let item of feedPosts">
     <img class="feed-item-userpic" [src]="item.User.UserPictureUrl" />
     <span class="feed-item-username">{{item.User.Username}}</span>
-    <span class="feed-item-time">{{item.DateTime}}</span> <br />
+    <span class="feed-item-time">{{item.DateTime.toLocaleString()}}</span> <br />
     <span class="feed-item-text">{{item.Text}}</span>
     <div class="rate-item">
         <img class="beer-brand-img" [src]="item.BeerItem.BeerBrand.LogoUrl"/>
@@ -21,6 +35,6 @@
         <span>{{item.BeerItem.Name}}</span>
         <span class="rating-mark">{{item.BeerRatingMark}}</span>
     </div>
-    <span class="feed-item-comment">Comment</span>
-    <span class="feed-item-like">Like</span>
+    <span class="feed-item-comment">Comment ({{item.Comments.length}})</span>
+    <span class="feed-item-like">Like ({{item.Likes.length}})</span>
 </div>

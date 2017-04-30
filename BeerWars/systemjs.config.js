@@ -25,6 +25,8 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
       '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
+      '@ngui/auto-complete': 'npm:@ngui/auto-complete/dist/auto-complete.umd.js',
+      'ngx-rating': 'npm:ngx-rating',
 
       // other libraries
       'rxjs':                      'npm:rxjs',
@@ -38,7 +40,8 @@
       },
       rxjs: {
         defaultExtension: 'js'
-      }
+      },
+      "ngx-rating": { "main": "index.js", "defaultExtension": "js" }
     }
   });
 })(this);

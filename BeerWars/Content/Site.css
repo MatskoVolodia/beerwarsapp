@@ -145,3 +145,28 @@ textarea {
     cursor: pointer;
 }
 
+.option-span{
+    cursor: pointer;
+}
+
+.option-span > img{
+    width: 30px;
+}
+
+.submit-item {
+    border: 1px solid gray;
+    border-radius: 5px;
+    background: #1A1D2A;
+}
+
+.star-icon {
+    color: #e1e1ea !important;
+}
+
+input{
+    max-width: none;
+}
+
+.submit-item button{
+    margin-top: 5px;
+}

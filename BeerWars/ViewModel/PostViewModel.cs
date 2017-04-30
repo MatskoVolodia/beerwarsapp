@@ -15,5 +15,8 @@ namespace BeerWars.ViewModel
         public string Guid { get; set; }
         public UserViewModel User { get; set; }
         public BeerItemViewModel BeerItem { get; set; }
+
+        public List<CommentViewModel> Comments { get; set; } 
+        public List<LikeViewModel> Likes { get; set; }
     }
 }
