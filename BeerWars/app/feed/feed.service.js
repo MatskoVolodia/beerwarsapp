@@ -18,6 +18,10 @@ var FeedService = (function () {
         return this.http.get('Apilike/GetAllPosts')
             .map(function (res) { return res.json(); });
     };
+    FeedService.prototype.getAllLikes = function () {
+        return this.http.get('Apilike/GetAllLikes')
+            .map(function (res) { return res.json(); });
+    };
     FeedService.prototype.sendPost = function (post) {
         var bodyString = JSON.stringify(post);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -47,7 +51,6 @@ var FeedService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post('Apilike/RemovePost', bodyString, options)
             .map(function (res) {
-            console.log(res);
             return res.json();
         });
     };

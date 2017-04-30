@@ -63,21 +63,13 @@ namespace BeerWars.Controllers
         [HttpGet]
         public JsonResult GetAllPosts()
         {
-            var result = _getInfoService.GetAllPosts().Select(post => {
-                post.Likes = post.Likes.Select(like => { like.Post = null; return like; }).ToList();
-                post.Comments = post.Comments.Select(comment => { comment.Post = null; return comment; }).ToList();
-
-                var temp = _mapper.MapPost(post);
-                return temp;
-            });
+            var result = _getInfoService.GetAllPosts().Select(post => _mapper.MapPost(post));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult AddNewPost(PostViewModel pvm)
         {
-            pvm.Comments = new List<CommentViewModel>();
-            pvm.Likes = new List<LikeViewModel>();
             var post = _mapper.MapPostViewModel(pvm);
             post.BeerItem.Guid = pvm.BeerItem.Guid;
 
@@ -104,9 +96,6 @@ namespace BeerWars.Controllers
         [HttpPost]
         public JsonResult Like(LikeViewModel lvm)
         {
-            lvm.Post.Comments = new List<CommentViewModel>();
-            lvm.Post.Likes = new List<LikeViewModel>();
-            
             var like = _mapper.MapLikeViewModel(lvm);
             like.Post.Guid = lvm.Post.Guid;
 
@@ -136,6 +125,14 @@ namespace BeerWars.Controllers
             _highLevelManagementService.RemovePost(postGuid);
 
             return Json(postGuid, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetAllLikes()
+        {
+            var result = _getInfoService.GetAllLikes().Select(like => _mapper.MapLike(like));
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

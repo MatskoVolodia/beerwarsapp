@@ -59,6 +59,8 @@ namespace Services
         public void RemovePost(string postGuid)
         {
             var post = _postRepository.Get(item => item.Guid == postGuid);
+            var postId = post.PostId;
+            _likeRepository.Delete(like => like.PostId == postId);
             _postRepository.Delete(post);
         }
     }

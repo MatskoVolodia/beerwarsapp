@@ -16,6 +16,11 @@ export class FeedService {
             .map(res => <Post[]>res.json());
     }
 
+    getAllLikes(): Observable<Like[]> {
+        return this.http.get('Apilike/GetAllLikes')
+            .map(res => <Like[]>res.json());
+    }
+
     sendPost(post: Post): Observable<Post> {
         let bodyString = JSON.stringify(post);
         let headers = new Headers({ 'Content-Type': 'application/json' });

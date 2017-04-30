@@ -24,6 +24,7 @@ export class FeedComponent implements OnInit {
     feedPosts: Post[];
     beerItems: BeerItem[];
     model: Post;
+    allLikes: Like[];
 
     constructor(private feedService: FeedService,
         private beerService: BeerService,
@@ -41,6 +42,8 @@ export class FeedComponent implements OnInit {
             .subscribe(item => {
                 item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
                 item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+                item.Comments = new Array();
+                item.Likes = new Array();
                 this.feedPosts.unshift(item);
                 console.log('Post sent');
             });
@@ -60,7 +63,18 @@ export class FeedComponent implements OnInit {
                                 for (let item of this.feedPosts) {
                                     item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
                                     item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+                                    item.Likes = new Array();
+                                    item.Comments = new Array();
                                 }
+
+                                this.feedService.getAllLikes()
+                                    .subscribe(likes => {
+                                        this.allLikes = likes;
+                                        this.allLikes.forEach(item => {
+                                            this.feedPosts.find(post => post.Guid == item.Post.Guid)
+                                                .Likes.push(item);
+                                        })
+                                    })
                             });
                     });
             });

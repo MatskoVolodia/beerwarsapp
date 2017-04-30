@@ -94,9 +94,7 @@ namespace BeerWars.ViewModel
                 BeerRatingMark = post.BeerRatingMark,
                 Guid = post.Guid,
                 Text = post.Text,
-                User = MapUser(post.User),
-                Comments = post.Comments.Select(item => MapComment(item)).ToList(),
-                Likes = post.Likes.Select(item => MapLike(item)).ToList()
+                User = MapUser(post.User)
             };
         }
 
@@ -108,9 +106,7 @@ namespace BeerWars.ViewModel
                 DateTime = pvm.DateTime,
                 BeerRatingMark = pvm.BeerRatingMark,
                 Text = pvm.Text,
-                User = pvm.User == null ? null : MapUserViewModel(pvm.User),
-                Comments = pvm.Comments == null ? null : pvm.Comments.Select(item => MapCommentViewModel(item)).ToList(),
-                Likes = pvm.Likes == null ? null : pvm.Likes.Select(item => MapLikeViewModel(item)).ToList()
+                User = pvm.User == null ? null : MapUserViewModel(pvm.User)
             };
         }
 

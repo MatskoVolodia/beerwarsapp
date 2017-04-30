@@ -37,6 +37,8 @@ var FeedComponent = (function () {
             .subscribe(function (item) {
             item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
             item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+            item.Comments = new Array();
+            item.Likes = new Array();
             _this.feedPosts.unshift(item);
             console.log('Post sent');
         });
@@ -56,7 +58,17 @@ var FeedComponent = (function () {
                         var item = _a[_i];
                         item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
                         item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+                        item.Likes = new Array();
+                        item.Comments = new Array();
                     }
+                    _this.feedService.getAllLikes()
+                        .subscribe(function (likes) {
+                        _this.allLikes = likes;
+                        _this.allLikes.forEach(function (item) {
+                            _this.feedPosts.find(function (post) { return post.Guid == item.Post.Guid; })
+                                .Likes.push(item);
+                        });
+                    });
                 });
             });
         });
