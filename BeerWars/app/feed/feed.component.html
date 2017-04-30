@@ -9,10 +9,18 @@
         Submit
     </button>
 </form>
-
-<div class="jumbotron" *ngFor="let item of feedPosts">
-    <h3>{{item.User.Username}}</h3>
-    <h4>{{item.Text}}</h4>
-    <h4>{{item.BeerItem.BeerBrand.Name}} - {{item.BeerItem.Name}} ({{item.BeerRatingMark}})</h4>
-    <h4>{{item.DateTime}}</h4>
+<hr />
+<div class="feed-item" *ngFor="let item of feedPosts">
+    <img class="feed-item-userpic" [src]="item.User.UserPictureUrl" />
+    <span class="feed-item-username">{{item.User.Username}}</span>
+    <span class="feed-item-time">{{item.DateTime}}</span> <br />
+    <span class="feed-item-text">{{item.Text}}</span>
+    <div class="rate-item">
+        <img class="beer-brand-img" [src]="item.BeerItem.BeerBrand.LogoUrl"/>
+        <span>{{item.BeerItem.BeerBrand.Name}}</span>
+        <span>{{item.BeerItem.Name}}</span>
+        <span class="rating-mark">{{item.BeerRatingMark}}</span>
+    </div>
+    <span class="feed-item-comment">Comment</span>
+    <span class="feed-item-like">Like</span>
 </div>

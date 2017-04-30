@@ -2,6 +2,7 @@
 
 import { FeedService } from './feed.service';
 import { BeerService } from '../beer/beer.service';
+import { AuthService } from '../auth.service';
 
 import { Post } from '../entities/post';
 import { BeerItem } from '../entities/beeritem';
@@ -13,7 +14,8 @@ import { User } from '../entities/user';
     templateUrl: './feed.component.html',
     providers: [
         FeedService,
-        BeerService
+        BeerService,
+        AuthService
     ]
 })
 export class FeedComponent implements OnInit {
@@ -22,12 +24,9 @@ export class FeedComponent implements OnInit {
     model: Post;
 
     constructor(private feedService: FeedService,
-        private beerService: BeerService
+        private beerService: BeerService,
+        private authService: AuthService
     ) {
-        this.model = new Post();
-        this.model.User = new User();
-        this.model.User.Username = 'admin'; //mock
-        this.model.BeerItem = new BeerItem();
     }
 
     sendPost() {
@@ -42,8 +41,17 @@ export class FeedComponent implements OnInit {
 
     ngOnInit() {
         this.feedService.getAllPosts()
-            .subscribe(items => this.feedPosts = items);
+            .subscribe(items => {
+                this.feedPosts = items.sort((x, y) => x.DateTime <= y.DateTime ? 1 : -1);
+                for (let item of this.feedPosts) {
+                    item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+                }
+            });
         this.beerService.getAllBeers()
             .subscribe(items => this.beerItems = items);
+        this.model = new Post();
+        this.authService.getCurrentUser()
+            .subscribe(user => this.model.User = user);
+        this.model.BeerItem = new BeerItem();
     }
 }
