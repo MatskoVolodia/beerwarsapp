@@ -33,11 +33,21 @@
         <img class="beer-brand-img" [src]="item.BeerItem.BeerBrand.LogoUrl"/>
         <span>{{item.BeerItem.BeerBrand.Name}}</span>
         <span>{{item.BeerItem.Name}}</span>
-        <span class="rating-mark">{{item.BeerRatingMark}}</span>
+        <rating [(ngModel)]="item.BeerRatingMark" [max]="10"
+                [readonly]="true"
+                [disabled]="false"
+                [required]="true"
+                [float]="true"
+                [ngModelOptions]="{standalone: true}"
+                class="pull-right">
+        </rating>
     </div>
     <img class="feed-item-comment" src="app/icons/comment.png" /> 
     <span class="count-text">{{item.Comments.length}}</span>
     <img class="feed-item-like" src='app/icons/like.png' *ngIf="!isLiked(item)" (click)="setLike(item)" /> 
     <img class="feed-item-dislike" src='app/icons/like.png' *ngIf="isLiked(item)" (click)="unsetLike(item)" />
     <span class="count-text">{{item.Likes.length}}</span>
+    <img class="delete-item pull-right" src="app/icons/delete.png" 
+         *ngIf="item.User.Username == model.User.Username" 
+         (click)="removePost(item)"/>
 </div>

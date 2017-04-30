@@ -39,6 +39,18 @@ var FeedService = (function () {
         return this.http.post('Apilike/Dislike', bodyString, options)
             .map(function (res) { return res.json(); });
     };
+    FeedService.prototype.removePost = function (postGuid) {
+        var bodyString = JSON.stringify({
+            postGuid: postGuid
+        });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('Apilike/RemovePost', bodyString, options)
+            .map(function (res) {
+            console.log(res);
+            return res.json();
+        });
+    };
     return FeedService;
 }());
 FeedService = __decorate([

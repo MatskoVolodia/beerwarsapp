@@ -15,6 +15,7 @@ namespace Services
         void AddNewPost(Post post);
         void Like(Like like);
         void Dislike(string likeGuid);
+        void RemovePost(string postGuid);
     }
 
     public class HighLevelManagementService: IHighLevelManagementService
@@ -53,6 +54,12 @@ namespace Services
         {
             var like = _likeRepository.Get(item => item.Guid == likeGuid);
             _likeRepository.Delete(like);
+        }
+
+        public void RemovePost(string postGuid)
+        {
+            var post = _postRepository.Get(item => item.Guid == postGuid);
+            _postRepository.Delete(post);
         }
     }
 }

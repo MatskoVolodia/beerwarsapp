@@ -129,5 +129,13 @@ namespace BeerWars.Controllers
 
             return Json(lvm, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult RemovePost(string postGuid)
+        {
+            _highLevelManagementService.RemovePost(postGuid);
+
+            return Json(postGuid, JsonRequestBehavior.AllowGet);
+        }
     }
 }

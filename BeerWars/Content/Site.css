@@ -157,6 +157,10 @@ textarea {
     color: #e1e1ea !important;
 }
 
+.rate-item > .ng-valid > span > span > .star-icon {
+    color: #1a1d2a !important;
+}
+
 input{
     max-width: none;
 }
@@ -165,7 +169,7 @@ input{
     margin-top: 5px;
 }
 
-.feed-item-comment, .feed-item-like, .feed-item-dislike{
+.feed-item-comment, .feed-item-like, .feed-item-dislike, .delete-item{
     width: 25px;
     cursor: pointer;
     margin: 5px;

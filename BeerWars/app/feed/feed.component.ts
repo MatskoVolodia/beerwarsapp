@@ -104,5 +104,17 @@ export class FeedComponent implements OnInit {
         return this.feedPosts.find(post => post.Guid == item.Guid)
             .Likes.some(like => like.User.Username == this.model.User.Username);
     }
+
+    removePost(item: Post) {
+        console.log(item);
+        this.feedService.removePost(item.Guid)
+            .subscribe(res => {
+                console.log(res);
+                this.feedPosts.splice(
+                    this.feedPosts.findIndex(post => post.Guid == res),
+                    1
+                );
+            })
+    }
 }
 

@@ -90,6 +90,15 @@ var FeedComponent = (function () {
         return this.feedPosts.find(function (post) { return post.Guid == item.Guid; })
             .Likes.some(function (like) { return like.User.Username == _this.model.User.Username; });
     };
+    FeedComponent.prototype.removePost = function (item) {
+        var _this = this;
+        console.log(item);
+        this.feedService.removePost(item.Guid)
+            .subscribe(function (res) {
+            console.log(res);
+            _this.feedPosts.splice(_this.feedPosts.findIndex(function (post) { return post.Guid == res; }), 1);
+        });
+    };
     return FeedComponent;
 }());
 FeedComponent = __decorate([

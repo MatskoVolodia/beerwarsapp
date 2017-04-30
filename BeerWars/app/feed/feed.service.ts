@@ -42,4 +42,17 @@ export class FeedService {
         return this.http.post('Apilike/Dislike', bodyString, options)
             .map((res: Response) => <Like>res.json());
     }
+
+    removePost(postGuid: string): Observable<string> {
+        let bodyString = JSON.stringify({
+            postGuid: postGuid
+        });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('Apilike/RemovePost', bodyString, options)
+            .map((res: Response) => {
+                return res.json();
+            });
+    }
 }
