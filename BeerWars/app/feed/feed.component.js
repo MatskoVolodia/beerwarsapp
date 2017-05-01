@@ -123,16 +123,26 @@ var FeedComponent = (function () {
         this.feedService.getCommentsByPostGuid(post.Guid)
             .subscribe(function (res) {
             _this.postInModal.Comments = res;
+            _this.postInModal.Comments.forEach(function (item) {
+                item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
+                item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+            });
+            _this.postInModal.Comments =
+                _this.postInModal.Comments.sort(function (x, y) { return x.DateTime <= y.DateTime ? 1 : -1; });
             _this.modal.show();
         });
     };
-    FeedComponent.prototype.sendComment = function () {
+    FeedComponent.prototype.sendComment = function (event) {
         var _this = this;
-        this.commentModel.DateTime = new Date();
-        this.feedService.sendComment(this.commentModel)
-            .subscribe(function (comment) {
-            _this.commentModel.Post.Comments.push(comment);
-        });
+        if (event.keyCode == 13) {
+            this.commentModel.DateTime = new Date();
+            this.feedService.sendComment(this.commentModel)
+                .subscribe(function (comment) {
+                comment.DateTime = new Date(parseInt(comment.DateTime.toString().substr(6)));
+                _this.commentModel.Post.Comments.unshift(comment);
+            });
+            this.commentModel.Text = '';
+        }
     };
     return FeedComponent;
 }());

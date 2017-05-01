@@ -145,16 +145,26 @@ export class FeedComponent implements OnInit {
         this.feedService.getCommentsByPostGuid(post.Guid)
             .subscribe(res => {
                 this.postInModal.Comments = res;
+                this.postInModal.Comments.forEach(item => {
+                    item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
+                    item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png'
+                })
+                this.postInModal.Comments =
+                    this.postInModal.Comments.sort((x, y) => x.DateTime <= y.DateTime ? 1 : -1);
                 this.modal.show();
             });
     }
 
-    sendComment() {
-        this.commentModel.DateTime = new Date();
-        this.feedService.sendComment(this.commentModel)
-            .subscribe(comment => {
-                this.commentModel.Post.Comments.push(comment);
-            })
+    sendComment(event: any) {
+        if (event.keyCode == 13) {
+            this.commentModel.DateTime = new Date();
+            this.feedService.sendComment(this.commentModel)
+                .subscribe(comment => {
+                    comment.DateTime = new Date(parseInt(comment.DateTime.toString().substr(6)));
+                    this.commentModel.Post.Comments.unshift(comment);
+                })
+            this.commentModel.Text = '';
+        }
     }
 }
 

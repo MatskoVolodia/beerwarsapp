@@ -25,12 +25,14 @@
         <div class="comments-section feed-item">
             <div class="comment-sender">
                 <img class="feed-item-userpic" [src]="model.User.UserPictureUrl" />
-                <input class="form-control" type="text" [(ngModel)]="commentModel.Text"/>
-                <button class="btn btn-success pull-right" (click)="sendComment()">Send</button>
+                <input class="form-control" type="text" [(ngModel)]="commentModel.Text" 
+                       placeholder="Type your comment.."
+                       (keydown)="sendComment($event)"/>
             </div>
             <div class="comments-view">
                 <div class="comment-item" *ngFor="let comment of postInModal.Comments">
-                    <img class="feed-item-userpic" [src]="'app/icons/'+comment.User.UserPictureUrl + './png'" />
+                    <img class="feed-item-userpic" [src]="comment.User.UserPictureUrl" />
+                    <span class="comment-item-username">[{{comment.User.Username}}]</span>
                     <span class="comment-text">{{comment.Text}}</span>
                     <span class="comment-datetime">{{comment.DateTime.toLocaleString()}}</span>
                 </div>

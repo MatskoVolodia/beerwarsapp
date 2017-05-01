@@ -183,3 +183,40 @@ input{
     font-size: large;
     color: #1A1D2A;
 }
+
+.comment-sender, .comments-view{
+    border: 1px solid white;
+    margin: 10px;
+    padding: 10px;
+}
+
+.comment-sender{
+    height: 80px;
+}
+
+.comment-sender input{
+    width: 80%;
+    margin-top: 8px;
+    margin-left: 8px;
+    float: left;
+}
+
+.comment-sender > .feed-item-userpic {
+    float: left;
+}
+
+
+.comment-item img{
+    width: 20px;
+}
+
+.comment-datetime{
+    float: right;
+    font-size: small;
+    color: gray;
+}
+
+.comment-item-username {
+    color: green;
+    margin: 0 2px 0 2px;
+}
