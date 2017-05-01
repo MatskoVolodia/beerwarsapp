@@ -195,6 +195,7 @@
     <Compile Include="ViewModel\LikeViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\PostViewModel.cs" />
+    <Compile Include="ViewModel\ContributionViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +246,11 @@
     <TypeScriptCompile Include="app\entities\beeritem.ts" />
     <TypeScriptCompile Include="app\entities\beerrating.ts" />
     <TypeScriptCompile Include="app\entities\comment.ts" />
+    <TypeScriptCompile Include="app\entities\contribution.ts" />
     <TypeScriptCompile Include="app\entities\filteritem.ts" />
     <TypeScriptCompile Include="app\entities\like.ts" />
     <TypeScriptCompile Include="app\entities\post.ts" />
+    <TypeScriptCompile Include="app\entities\rankitem.ts" />
     <TypeScriptCompile Include="app\entities\user.ts" />
     <TypeScriptCompile Include="app\feed\feed.component.ts" />
     <TypeScriptCompile Include="app\feed\feed.service.ts" />

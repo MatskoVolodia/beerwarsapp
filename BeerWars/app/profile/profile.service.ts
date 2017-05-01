@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angul
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../entities/user';
+import { Contribution } from '../entities/contribution';
 
 @Injectable()
 export class ProfileService {
@@ -17,6 +18,16 @@ export class ProfileService {
         return this.http.get('Apilike/GetUserInformation', { search: params })
             .map((res: Response) => {
                 return <User>(res.json());
+            });
+    }
+
+    getUsersContribution(username: string): Observable<Contribution> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('username', username);
+
+        return this.http.get('Apilike/GetUsersContribution', { search: params })
+            .map((res: Response) => {
+                return <Contribution>(res.json());
             });
     }
 }

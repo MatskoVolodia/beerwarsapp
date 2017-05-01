@@ -16,6 +16,7 @@ namespace Services
         List<Post> GetAllPosts();
         List<Like> GetAllLikes();
         List<Comment> GetAllComments();
+        List<Post> GetUsersPosts(string username);
         List<Comment> GetCommentsByPostGuid(string postGuid);
         List<Post> GetPostsOnPage(int page, int itemsPerPage);
         List<Like> GetLikesByPostGuids(List<string> postGuids);
@@ -115,6 +116,11 @@ namespace Services
             return _postRepository.GetAll()
                 .OrderByDescending(item => item.DateTime)
                 .Skip(page * itemsPerPage).Take(itemsPerPage).ToList();
+        }
+
+        public List<Post> GetUsersPosts(string username)
+        {
+            return _postRepository.GetMany(item => item.User.Username == username).ToList();
         }
     }
 }

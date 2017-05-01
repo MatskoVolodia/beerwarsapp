@@ -1,4 +1,22 @@
-﻿<h3>{{user.Username}}</h3>
-<h3>{{user.Role}}</h3>
-<h3>{{user.UserPictureUrl}}</h3>
-<h3>{{user.WarSide}}</h3>
+﻿<div [ngClass]="{'profile-content': true, 'light-side': user.WarSide, 'dark-side': !user.WarSide}">
+    <div class="wrapper">
+        <div *ngFor="let rank of ranks" [ngClass]="{'reached-rank': rank.Value <= userrank, 'closed-rank': rank.Value > userrank, 'rank-block': true}">
+            <div class="rank-value">
+                <span>{{rank.Value}}</span>
+            </div>
+            <div class="rank-name">
+                <span>{{rank.Name}}</span>
+            </div>
+            <div class="triangle"></div>
+        </div>
+    </div>
+
+    <div class="contribution-wrapper">
+        <div class="light-side-contribution">
+            <span>{{usersContribution.LightSide}}</span>
+        </div>
+        <div class="dark-side-contribution">
+            <span>{{usersContribution.DarkSide}}</span>
+        </div>
+    </div>
+</div>

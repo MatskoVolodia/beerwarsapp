@@ -11,17 +11,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var profile_service_1 = require("./profile.service");
 var user_1 = require("../entities/user");
+var rankitem_1 = require("../entities/rankitem");
+var contribution_1 = require("../entities/contribution");
 var ProfileComponent = (function () {
     function ProfileComponent(profileService) {
         this.profileService = profileService;
         this.user = new user_1.User();
+        this.ranks = new Array();
+        this.usersContribution = new contribution_1.Contribution();
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.profileService.getUser('admin')
             .subscribe(function (user) {
             _this.user = user;
-            console.log(_this.user);
+            _this.profileService.getUsersContribution(_this.user.Username)
+                .subscribe(function (res) {
+                _this.usersContribution = res;
+                _this.userrank = _this.user.WarSide ?
+                    _this.usersContribution.LightSide :
+                    _this.usersContribution.DarkSide;
+            });
+            _this.ranks = _this.user.WarSide ?
+                rankitem_1.RankItemDefinitions.LightSide :
+                rankitem_1.RankItemDefinitions.DarkSide;
         });
     };
     return ProfileComponent;

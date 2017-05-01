@@ -22,6 +22,14 @@ var ProfileService = (function () {
             return (res.json());
         });
     };
+    ProfileService.prototype.getUsersContribution = function (username) {
+        var params = new http_1.URLSearchParams();
+        params.set('username', username);
+        return this.http.get('Apilike/GetUsersContribution', { search: params })
+            .map(function (res) {
+            return (res.json());
+        });
+    };
     return ProfileService;
 }());
 ProfileService = __decorate([
