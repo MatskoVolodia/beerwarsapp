@@ -17,9 +17,30 @@ export class FeedService {
             .map(res => <Post[]>res.json());
     }
 
+    getPostsOnPage(page: number, itemsPerPage: number): Observable<Post[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('page', page.toString());
+        params.set('itemsPerPage', itemsPerPage.toString());
+
+        return this.http.get('Apilike/GetPostsOnPage', { search: params })
+            .map((res: Response) => {
+                return <Post[]>(res.json());
+            });
+    }
+
     getAllLikes(): Observable<Like[]> {
         return this.http.get('Apilike/GetAllLikes')
             .map(res => <Like[]>res.json());
+    }
+
+    getLikesByPostGuids(guids: string[]): Observable<Like[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('postsGuids', JSON.stringify(guids));
+
+        return this.http.get('Apilike/GetLikesByPostGuids', { search: params })
+            .map((res: Response) => {
+                return <Like[]>(res.json());
+            });
     }
 
     sendPost(post: Post): Observable<Post> {

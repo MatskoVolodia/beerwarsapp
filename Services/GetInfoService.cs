@@ -17,6 +17,8 @@ namespace Services
         List<Like> GetAllLikes();
         List<Comment> GetAllComments();
         List<Comment> GetCommentsByPostGuid(string postGuid);
+        List<Post> GetPostsOnPage(int page, int itemsPerPage);
+        List<Like> GetLikesByPostGuids(List<string> postGuids);
         int? GetIdOf(BeerBrand brand);
         int? GetIdOf(BeerItem beeritem);
         int? GetIdOf(User user);
@@ -101,6 +103,18 @@ namespace Services
         public int? GetIdOf(Like like)
         {
             return _likeRepository.Get(item => item.Guid == like.Guid)?.LikeId;
+        }
+
+        public List<Like> GetLikesByPostGuids(List<string> postGuids)
+        {
+            return _likeRepository.GetMany(like => postGuids.Contains(like.Post.Guid)).ToList();
+        }
+
+        public List<Post> GetPostsOnPage(int page, int itemsPerPage)
+        {
+            return _postRepository.GetAll()
+                .OrderByDescending(item => item.DateTime)
+                .Skip(page * itemsPerPage).Take(itemsPerPage).ToList();
         }
     }
 }

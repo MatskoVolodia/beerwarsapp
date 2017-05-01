@@ -26,9 +26,10 @@ export class FeedComponent implements OnInit {
     feedPosts: Post[];
     beerItems: BeerItem[];
     model: Post = new Post();
-    allLikes: Like[];
     postInModal: Post;
     commentModel: Comment = new Comment();
+    itemsPerPage: number = 3;
+    currentPage: number = 0;
 
     @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -52,6 +53,11 @@ export class FeedComponent implements OnInit {
                 item.Likes = new Array();
                 this.feedPosts.unshift(item);
                 console.log('Post sent');
+
+                this.model.BeerItem = new BeerItem();
+                this.model.BeerItem.Name = "";
+                this.model.BeerRatingMark = 1;
+                this.model.Text = '';
             });
     }
 
@@ -70,9 +76,9 @@ export class FeedComponent implements OnInit {
                     .subscribe(items => {
                         this.beerItems = items
 
-                        this.feedService.getAllPosts()
+                        this.feedService.getPostsOnPage(this.currentPage, this.itemsPerPage)
                             .subscribe(items => {
-                                this.feedPosts = items.sort((x, y) => x.DateTime <= y.DateTime ? 1 : -1);
+                                this.feedPosts = items;
                                 for (let item of this.feedPosts) {
                                     item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
                                     item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
@@ -80,10 +86,9 @@ export class FeedComponent implements OnInit {
                                     item.Comments = new Array();
                                 }
 
-                                this.feedService.getAllLikes()
+                                this.feedService.getLikesByPostGuids(this.feedPosts.map(item => item.Guid))
                                     .subscribe(likes => {
-                                        this.allLikes = likes;
-                                        this.allLikes.forEach(item => {
+                                        likes.forEach(item => {
                                             this.feedPosts.find(post => post.Guid == item.Post.Guid)
                                                 .Likes.push(item);
                                         })
@@ -165,6 +170,28 @@ export class FeedComponent implements OnInit {
                 })
             this.commentModel.Text = '';
         }
+    }
+
+    showPrevious() {
+        this.currentPage = this.currentPage + 1;
+        this.feedService.getPostsOnPage(this.currentPage, this.itemsPerPage)
+            .subscribe(items => {
+                for (let item of items) {
+                    item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
+                    item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+                    item.Likes = new Array();
+                    item.Comments = new Array();
+                    this.feedPosts.push(item);
+                }
+
+                this.feedService.getLikesByPostGuids(items.map(item => item.Guid))
+                    .subscribe(likes => {
+                        likes.forEach(item => {
+                            this.feedPosts.find(post => post.Guid == item.Post.Guid)
+                                .Likes.push(item);
+                        })
+                    })
+            });
     }
 }
 

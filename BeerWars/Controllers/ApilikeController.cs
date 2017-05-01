@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace BeerWars.Controllers
 {
@@ -64,6 +65,14 @@ namespace BeerWars.Controllers
         public JsonResult GetAllPosts()
         {
             var result = _getInfoService.GetAllPosts().Select(post => _mapper.MapPost(post));
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetPostsOnPage(int page, int itemsPerPage)
+        {
+            var result = _getInfoService.GetPostsOnPage(page, itemsPerPage)
+                .Select(post => _mapper.MapPost(post));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -131,6 +140,17 @@ namespace BeerWars.Controllers
         public JsonResult GetAllLikes()
         {
             var result = _getInfoService.GetAllLikes().Select(like => _mapper.MapLike(like));
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetLikesByPostGuids(string postsGuids)
+        {
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var arrayOfGuids = js.Deserialize<string[]>(postsGuids).ToList();
+            var result = _getInfoService.GetLikesByPostGuids(arrayOfGuids)
+                .Select(like => _mapper.MapLike(like));
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

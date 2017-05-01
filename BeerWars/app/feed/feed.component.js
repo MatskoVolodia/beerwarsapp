@@ -27,6 +27,8 @@ var FeedComponent = (function () {
         this._sanitizer = _sanitizer;
         this.model = new post_1.Post();
         this.commentModel = new comment_1.Comment();
+        this.itemsPerPage = 3;
+        this.currentPage = 0;
         this.autocompleListFormatter = function (data) {
             var html = "<span style=\"cursor: pointer\" class='option-span'>\n            <img style=\"width: 30px\" src=" + data.BeerBrand.LogoUrl + " />\n            " + data.BeerBrand.Name + " " + data.Name + " (" + data.Sort + ") \n        </span>";
             return _this._sanitizer.bypassSecurityTrustHtml(html);
@@ -45,6 +47,10 @@ var FeedComponent = (function () {
             item.Likes = new Array();
             _this.feedPosts.unshift(item);
             console.log('Post sent');
+            _this.model.BeerItem = new beeritem_1.BeerItem();
+            _this.model.BeerItem.Name = "";
+            _this.model.BeerRatingMark = 1;
+            _this.model.Text = '';
         });
     };
     FeedComponent.prototype.ngOnInit = function () {
@@ -60,9 +66,9 @@ var FeedComponent = (function () {
             _this.beerService.getAllBeers()
                 .subscribe(function (items) {
                 _this.beerItems = items;
-                _this.feedService.getAllPosts()
+                _this.feedService.getPostsOnPage(_this.currentPage, _this.itemsPerPage)
                     .subscribe(function (items) {
-                    _this.feedPosts = items.sort(function (x, y) { return x.DateTime <= y.DateTime ? 1 : -1; });
+                    _this.feedPosts = items;
                     for (var _i = 0, _a = _this.feedPosts; _i < _a.length; _i++) {
                         var item = _a[_i];
                         item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
@@ -70,10 +76,9 @@ var FeedComponent = (function () {
                         item.Likes = new Array();
                         item.Comments = new Array();
                     }
-                    _this.feedService.getAllLikes()
+                    _this.feedService.getLikesByPostGuids(_this.feedPosts.map(function (item) { return item.Guid; }))
                         .subscribe(function (likes) {
-                        _this.allLikes = likes;
-                        _this.allLikes.forEach(function (item) {
+                        likes.forEach(function (item) {
                             _this.feedPosts.find(function (post) { return post.Guid == item.Post.Guid; })
                                 .Likes.push(item);
                         });
@@ -143,6 +148,28 @@ var FeedComponent = (function () {
             });
             this.commentModel.Text = '';
         }
+    };
+    FeedComponent.prototype.showPrevious = function () {
+        var _this = this;
+        this.currentPage = this.currentPage + 1;
+        this.feedService.getPostsOnPage(this.currentPage, this.itemsPerPage)
+            .subscribe(function (items) {
+            for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+                var item = items_1[_i];
+                item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
+                item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
+                item.Likes = new Array();
+                item.Comments = new Array();
+                _this.feedPosts.push(item);
+            }
+            _this.feedService.getLikesByPostGuids(items.map(function (item) { return item.Guid; }))
+                .subscribe(function (likes) {
+                likes.forEach(function (item) {
+                    _this.feedPosts.find(function (post) { return post.Guid == item.Post.Guid; })
+                        .Likes.push(item);
+                });
+            });
+        });
     };
     return FeedComponent;
 }());

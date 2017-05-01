@@ -30,11 +30,16 @@
                        (keydown)="sendComment($event)"/>
             </div>
             <div class="comments-view">
-                <div class="comment-item" *ngFor="let comment of postInModal.Comments">
-                    <img class="feed-item-userpic" [src]="comment.User.UserPictureUrl" />
-                    <span class="comment-item-username">[{{comment.User.Username}}]</span>
-                    <span class="comment-text">{{comment.Text}}</span>
-                    <span class="comment-datetime">{{comment.DateTime.toLocaleString()}}</span>
+                <ng-container *ngIf="postInModal.Comments.length > 0">
+                    <div class="comment-item" *ngFor="let comment of postInModal.Comments">
+                        <img class="feed-item-userpic" [src]="comment.User.UserPictureUrl" />
+                        <span class="comment-item-username">[{{comment.User.Username}}]</span>
+                        <span class="comment-text">{{comment.Text}}</span>
+                        <span class="comment-datetime">{{comment.DateTime.toLocaleString()}}</span>
+                    </div>
+                </ng-container>
+                <div *ngIf="postInModal.Comments.length == 0" class="comment-item">
+                    <span class="comment-text">Be the first one to comment!</span>
                 </div>
             </div>
         </div>
@@ -94,3 +99,5 @@
          *ngIf="item.User.Username == model.User.Username" 
          (click)="removePost(item)"/>
 </div>
+
+<button class="btn btn-info" (click)="showPrevious()">Show previous</button>

@@ -18,9 +18,26 @@ var FeedService = (function () {
         return this.http.get('Apilike/GetAllPosts')
             .map(function (res) { return res.json(); });
     };
+    FeedService.prototype.getPostsOnPage = function (page, itemsPerPage) {
+        var params = new http_1.URLSearchParams();
+        params.set('page', page.toString());
+        params.set('itemsPerPage', itemsPerPage.toString());
+        return this.http.get('Apilike/GetPostsOnPage', { search: params })
+            .map(function (res) {
+            return (res.json());
+        });
+    };
     FeedService.prototype.getAllLikes = function () {
         return this.http.get('Apilike/GetAllLikes')
             .map(function (res) { return res.json(); });
+    };
+    FeedService.prototype.getLikesByPostGuids = function (guids) {
+        var params = new http_1.URLSearchParams();
+        params.set('postsGuids', JSON.stringify(guids));
+        return this.http.get('Apilike/GetLikesByPostGuids', { search: params })
+            .map(function (res) {
+            return (res.json());
+        });
     };
     FeedService.prototype.sendPost = function (post) {
         var bodyString = JSON.stringify(post);
