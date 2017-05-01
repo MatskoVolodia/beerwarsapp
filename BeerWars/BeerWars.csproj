@@ -146,6 +146,7 @@
     <Content Include="app\app.component.html" />
     <Content Include="app\beer\beer.component.html" />
     <Content Include="app\feed\feed.component.html" />
+    <Content Include="app\modal\modal.component.html" />
     <Content Include="app\icons\icon1.png" />
     <Content Include="app\icons\icon10.png" />
     <Content Include="app\icons\icon2.png" />
@@ -247,6 +248,7 @@
     <TypeScriptCompile Include="app\entities\user.ts" />
     <TypeScriptCompile Include="app\feed\feed.component.ts" />
     <TypeScriptCompile Include="app\feed\feed.service.ts" />
+    <TypeScriptCompile Include="app\modal\modal.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\auth.service.ts" />
     <TypeScriptCompile Include="app\profile\profile.component.ts" />

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Post } from '../entities/post';
 import { Like } from '../entities/like';
+import { Comment } from '../entities/comment';
 
 @Injectable()
 export class FeedService {
@@ -58,6 +59,26 @@ export class FeedService {
         return this.http.post('Apilike/RemovePost', bodyString, options)
             .map((res: Response) => {
                 return res.json();
+            });
+    }
+
+    sendComment(comment: Comment): Observable<Comment> {
+        let bodyString = JSON.stringify(comment);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('Apilike/AddNewComment', bodyString, options)
+            .map((res: Response) => <Comment>res.json());
+    }
+
+    getCommentsByPostGuid(postGuid: string): Observable<Comment[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('postGuid', postGuid);
+
+        return this.http.get('Apilike/GetCommentsByPostGuid', { search: params })
+            .map((res: Response) => {
+                console.log(res);
+                return <Comment[]>(res.json());
             });
     }
 }

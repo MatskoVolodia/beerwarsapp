@@ -1,4 +1,45 @@
-﻿<div class="feed-item submit-item">
+﻿<modal-dialog>
+    <div class="app-modal-body" *ngIf="postInModal">
+        <div class="feed-item">
+            <img class="feed-item-userpic" [src]="postInModal.User.UserPictureUrl" />
+            <span class="feed-item-username">{{postInModal.User.Username}}</span>
+            <span class="feed-item-time">{{postInModal.DateTime.toLocaleString()}}</span> <br />
+            <span class="feed-item-text">{{postInModal.Text}}</span>
+            <div class="rate-item">
+                <img class="beer-brand-img" [src]="postInModal.BeerItem.BeerBrand.LogoUrl" />
+                <span>{{postInModal.BeerItem.BeerBrand.Name}}</span>
+                <span>{{postInModal.BeerItem.Name}}</span>
+                <rating [(ngModel)]="postInModal.BeerRatingMark" [max]="10"
+                        [readonly]="true"
+                        [disabled]="false"
+                        [required]="true"
+                        [float]="true"
+                        [ngModelOptions]="{standalone: true}"
+                        class="pull-right">
+                </rating>
+            </div>
+            <img class="feed-item-like" src='app/icons/like.png' *ngIf="!isLiked(postInModal)" (click)="setLike(postInModal)" />
+            <img class="feed-item-dislike" src='app/icons/like.png' *ngIf="isLiked(postInModal)" (click)="unsetLike(postInModal)" />
+            <span class="count-text">{{postInModal.Likes.length}}</span>
+        </div>
+        <div class="comments-section feed-item">
+            <div class="comment-sender">
+                <img class="feed-item-userpic" [src]="model.User.UserPictureUrl" />
+                <input class="form-control" type="text" [(ngModel)]="commentModel.Text"/>
+                <button class="btn btn-success pull-right" (click)="sendComment()">Send</button>
+            </div>
+            <div class="comments-view">
+                <div class="comment-item" *ngFor="let comment of postInModal.Comments">
+                    <img class="feed-item-userpic" [src]="'app/icons/'+comment.User.UserPictureUrl + './png'" />
+                    <span class="comment-text">{{comment.Text}}</span>
+                    <span class="comment-datetime">{{comment.DateTime.toLocaleString()}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-dialog>
+
+<div class="feed-item submit-item">
     <form class="form-horizontal" #dayReportForm="ngForm">
         <input type="text" class="form-control" required placeholder="Tell us how it was!" [(ngModel)]="model.Text" [ngModelOptions]="{standalone: true}" />
         <input auto-complete
@@ -42,8 +83,8 @@
                 class="pull-right">
         </rating>
     </div>
-    <img class="feed-item-comment" src="app/icons/comment.png" /> 
-    <span class="count-text">{{item.Comments.length}}</span>
+    <img class="feed-item-comment" src="app/icons/comment.png" 
+         (click)="openCommentSection(item)"/> 
     <img class="feed-item-like" src='app/icons/like.png' *ngIf="!isLiked(item)" (click)="setLike(item)" /> 
     <img class="feed-item-dislike" src='app/icons/like.png' *ngIf="isLiked(item)" (click)="unsetLike(item)" />
     <span class="count-text">{{item.Likes.length}}</span>

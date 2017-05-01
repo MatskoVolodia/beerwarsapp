@@ -16,6 +16,7 @@ var app_component_1 = require("./app.component");
 var profile_component_1 = require("./profile/profile.component");
 var beer_component_1 = require("./beer/beer.component");
 var feed_component_1 = require("./feed/feed.component");
+var modal_component_1 = require("./modal/modal.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,7 +36,8 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             profile_component_1.ProfileComponent,
             beer_component_1.BeerComponent,
-            feed_component_1.FeedComponent
+            feed_component_1.FeedComponent,
+            modal_component_1.ModalComponent
         ],
         bootstrap: [app_component_1.AppComponent]
     })

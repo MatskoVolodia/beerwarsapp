@@ -10,12 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
+var modal_component_1 = require("../modal/modal.component");
 var feed_service_1 = require("./feed.service");
 var beer_service_1 = require("../beer/beer.service");
 var auth_service_1 = require("../auth.service");
 var post_1 = require("../entities/post");
 var beeritem_1 = require("../entities/beeritem");
 var like_1 = require("../entities/like");
+var comment_1 = require("../entities/comment");
 var FeedComponent = (function () {
     function FeedComponent(feedService, beerService, authService, _sanitizer) {
         var _this = this;
@@ -23,6 +25,8 @@ var FeedComponent = (function () {
         this.beerService = beerService;
         this.authService = authService;
         this._sanitizer = _sanitizer;
+        this.model = new post_1.Post();
+        this.commentModel = new comment_1.Comment();
         this.autocompleListFormatter = function (data) {
             var html = "<span style=\"cursor: pointer\" class='option-span'>\n            <img style=\"width: 30px\" src=" + data.BeerBrand.LogoUrl + " />\n            " + data.BeerBrand.Name + " " + data.Name + " (" + data.Sort + ") \n        </span>";
             return _this._sanitizer.bypassSecurityTrustHtml(html);
@@ -47,7 +51,12 @@ var FeedComponent = (function () {
         var _this = this;
         this.authService.getCurrentUser()
             .subscribe(function (user) {
+            _this.model.BeerItem = new beeritem_1.BeerItem();
+            _this.model.BeerItem.Name = "";
+            _this.model.BeerRatingMark = 1;
             _this.model.User = user;
+            _this.commentModel.User = _this.model.User;
+            _this.model.User.UserPictureUrl = "app/icons/" + _this.model.User.UserPictureUrl + ".png";
             _this.beerService.getAllBeers()
                 .subscribe(function (items) {
                 _this.beerItems = items;
@@ -72,10 +81,6 @@ var FeedComponent = (function () {
                 });
             });
         });
-        this.model = new post_1.Post();
-        this.model.BeerItem = new beeritem_1.BeerItem();
-        this.model.BeerItem.Name = "";
-        this.model.BeerRatingMark = 1;
     };
     FeedComponent.prototype.setLike = function (item) {
         var like = new like_1.Like();
@@ -111,8 +116,30 @@ var FeedComponent = (function () {
             _this.feedPosts.splice(_this.feedPosts.findIndex(function (post) { return post.Guid == res; }), 1);
         });
     };
+    FeedComponent.prototype.openCommentSection = function (post) {
+        var _this = this;
+        this.postInModal = post;
+        this.commentModel.Post = post;
+        this.feedService.getCommentsByPostGuid(post.Guid)
+            .subscribe(function (res) {
+            _this.postInModal.Comments = res;
+            _this.modal.show();
+        });
+    };
+    FeedComponent.prototype.sendComment = function () {
+        var _this = this;
+        this.commentModel.DateTime = new Date();
+        this.feedService.sendComment(this.commentModel)
+            .subscribe(function (comment) {
+            _this.commentModel.Post.Comments.push(comment);
+        });
+    };
     return FeedComponent;
 }());
+__decorate([
+    core_1.ViewChild(modal_component_1.ModalComponent),
+    __metadata("design:type", modal_component_1.ModalComponent)
+], FeedComponent.prototype, "modal", void 0);
 FeedComponent = __decorate([
     core_1.Component({
         selector: 'feed',

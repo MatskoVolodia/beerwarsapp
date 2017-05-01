@@ -134,5 +134,31 @@ namespace BeerWars.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetCommentsByPostGuid(string postGuid)
+        {
+            var result = _getInfoService.GetCommentsByPostGuid(postGuid).Select(item => _mapper.MapComment(item));
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddNewComment(CommentViewModel cvm)
+        {
+            var comment = _mapper.MapCommentViewModel(cvm);
+            comment.Post.Guid = cvm.Post.Guid;
+
+            comment.UserId = (int)_getInfoService.GetIdOf(comment.User);
+            comment.User = null;
+
+            comment.PostId = (int)_getInfoService.GetIdOf(comment.Post);
+            comment.Post = null;
+
+            _highLevelManagementService.AddNewComment(comment);
+            cvm.Guid = comment.Guid;
+
+            return Json(cvm, JsonRequestBehavior.AllowGet);
+        }
     }
 }

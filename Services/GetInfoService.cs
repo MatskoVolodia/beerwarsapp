@@ -15,6 +15,8 @@ namespace Services
         List<BeerBrand> GetAllBeerBrands();
         List<Post> GetAllPosts();
         List<Like> GetAllLikes();
+        List<Comment> GetAllComments();
+        List<Comment> GetCommentsByPostGuid(string postGuid);
         int? GetIdOf(BeerBrand brand);
         int? GetIdOf(BeerItem beeritem);
         int? GetIdOf(User user);
@@ -56,6 +58,11 @@ namespace Services
             return _beerItemRepository.GetAll().ToList();
         }
 
+        public List<Comment> GetAllComments()
+        {
+            return _commentRepository.GetAll().ToList();
+        }
+
         public List<Like> GetAllLikes()
         {
             return _likeRepository.GetAll().ToList();
@@ -64,6 +71,11 @@ namespace Services
         public List<Post> GetAllPosts()
         {
             return _postRepository.GetAll().ToList();
+        }
+
+        public List<Comment> GetCommentsByPostGuid(string postGuid)
+        {
+            return _commentRepository.GetMany(comment => comment.Post.Guid == postGuid).ToList();
         }
 
         public int? GetIdOf(BeerBrand brand)

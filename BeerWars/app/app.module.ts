@@ -10,7 +10,8 @@ import { RatingModule } from "ngx-rating";
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BeerComponent } from './beer/beer.component';
-import { FeedComponent } from './feed/feed.component';
+import { FeedComponent } from './feed/feed.component'; 
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { FeedComponent } from './feed/feed.component';
       AppComponent,
       ProfileComponent,
       BeerComponent,
-      FeedComponent
+      FeedComponent,
+      ModalComponent
   ],
   bootstrap:    [ AppComponent ]
 })

@@ -13,6 +13,7 @@ namespace Services
     {
         void AddNewBeer(BeerItem beeritem);
         void AddNewPost(Post post);
+        void AddNewComment(Comment comment);
         void Like(Like like);
         void Dislike(string likeGuid);
         void RemovePost(string postGuid);
@@ -24,15 +25,18 @@ namespace Services
         private readonly IRepository<BeerBrand> _beerBrandRepository;
         private readonly IRepository<Post> _postRepository;
         private readonly IRepository<Like> _likeRepository;
+        private readonly IRepository<Comment> _commentRepository;
 
         public HighLevelManagementService(IRepository<BeerItem> beerItemRepository, IRepository<BeerBrand> beerBrandRepository,
             IRepository<Post> postRepository,
-            IRepository<Like> likeRepository)
+            IRepository<Like> likeRepository,
+            IRepository<Comment> commentRepository)
         {
             _beerItemRepository = beerItemRepository;
             _beerBrandRepository = beerBrandRepository;
             _postRepository = postRepository;
             _likeRepository = likeRepository;
+            _commentRepository = commentRepository;
         }
 
         public void AddNewBeer(BeerItem beeritem)
@@ -62,6 +66,11 @@ namespace Services
             var postId = post.PostId;
             _likeRepository.Delete(like => like.PostId == postId);
             _postRepository.Delete(post);
+        }
+
+        public void AddNewComment(Comment comment)
+        {
+            _commentRepository.Add(comment);
         }
     }
 }

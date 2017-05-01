@@ -1,5 +1,6 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, ViewChild, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { ModalComponent } from '../modal/modal.component';
 
 import { FeedService } from './feed.service';
 import { BeerService } from '../beer/beer.service';
@@ -9,6 +10,7 @@ import { Post } from '../entities/post';
 import { BeerItem } from '../entities/beeritem';
 import { User } from '../entities/user';
 import { Like } from '../entities/like';
+import { Comment } from '../entities/comment';
 
 @Component({
     selector: 'feed',
@@ -23,13 +25,17 @@ import { Like } from '../entities/like';
 export class FeedComponent implements OnInit {
     feedPosts: Post[];
     beerItems: BeerItem[];
-    model: Post;
+    model: Post = new Post();
     allLikes: Like[];
+    postInModal: Post;
+    commentModel: Comment = new Comment();
+
+    @ViewChild(ModalComponent) modal: ModalComponent;
 
     constructor(private feedService: FeedService,
         private beerService: BeerService,
         private authService: AuthService,
-        private _sanitizer: DomSanitizer
+        private _sanitizer: DomSanitizer,
     ) {
     }
 
@@ -52,7 +58,14 @@ export class FeedComponent implements OnInit {
     ngOnInit() {
         this.authService.getCurrentUser()
             .subscribe(user => {
+                this.model.BeerItem = new BeerItem();
+                this.model.BeerItem.Name = "";
+                this.model.BeerRatingMark = 1;
                 this.model.User = user;
+
+                this.commentModel.User = this.model.User;
+
+                this.model.User.UserPictureUrl = `app/icons/${this.model.User.UserPictureUrl}.png`;
                 this.beerService.getAllBeers()
                     .subscribe(items => {
                         this.beerItems = items
@@ -78,11 +91,6 @@ export class FeedComponent implements OnInit {
                             });
                     });
             });
-
-        this.model = new Post();
-        this.model.BeerItem = new BeerItem();
-        this.model.BeerItem.Name = "";
-        this.model.BeerRatingMark = 1;
     }
 
     autocompleListFormatter = (data: BeerItem) => {
@@ -128,6 +136,24 @@ export class FeedComponent implements OnInit {
                     this.feedPosts.findIndex(post => post.Guid == res),
                     1
                 );
+            })
+    }
+
+    openCommentSection(post: Post) {
+        this.postInModal = post;
+        this.commentModel.Post = post;
+        this.feedService.getCommentsByPostGuid(post.Guid)
+            .subscribe(res => {
+                this.postInModal.Comments = res;
+                this.modal.show();
+            });
+    }
+
+    sendComment() {
+        this.commentModel.DateTime = new Date();
+        this.feedService.sendComment(this.commentModel)
+            .subscribe(comment => {
+                this.commentModel.Post.Comments.push(comment);
             })
     }
 }
