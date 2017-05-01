@@ -44,14 +44,27 @@
                 <th>Brand name</th>
                 <th>Beer name</th>
                 <th>Beer sort</th>
+                <th>Rating</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of beerItems">
+            <tr *ngFor="let item of currentItems">
                 <td><img src="{{item.BeerBrand.LogoUrl}}" style="width:40px; height:40px"/></td>
                 <td>{{item.BeerBrand.Name}}</td>
                 <td>{{item.Name}}</td>
-                <td>{{item.Sort}}</td>
+                <td style="text-align: center;">
+                    <div *ngIf="item.Sort == 'Light'" style="width: 30px; height: 30px; border-radius: 90%; background: white; border: 1px solid black"></div>
+                    <div *ngIf="item.Sort == 'Dark'" style="width: 30px; height: 30px; border-radius: 90%; background: black; border: 1px solid white"></div>
+                </td>
+                <td>
+                    <rating [(ngModel)]="item.Rating" [max]="5"
+                            [readonly]="true"
+                            [disabled]="false"
+                            [required]="true"
+                            [float]="true"
+                            [ngModelOptions]="{standalone: true}">
+                    </rating>
+                </td>
             </tr>
         </tbody>
     </table>

@@ -40,8 +40,18 @@ var BeerComponent = (function () {
         this.beerService.getAllBeers()
             .subscribe(function (items) {
             _this.beerItems = items;
+            console.log(items);
+            _this.beerItems.forEach(function (item) { return item.Rating = 0; });
             _this.filterItems = _this.generateFilterItems();
             _this.beerBrands = _this.getUniqueBeerBrands();
+            _this.currentItems = _this.beerItems;
+            _this.beerService.getBeerRatings()
+                .subscribe(function (ratings) {
+                ratings.forEach(function (rate) {
+                    _this.beerItems.find(function (beer) { return beer.Guid === rate.BeerItemGuid; })
+                        .Rating = rate.Rating / 2;
+                });
+            });
         });
     };
     BeerComponent.prototype.addNewBeer = function () {
@@ -63,10 +73,54 @@ var BeerComponent = (function () {
         });
     };
     BeerComponent.prototype.changeFilterState = function (filter) {
+        this.topLightDarkFilters[0] = false;
         filter.checked = !filter.checked;
+        this.refilter();
+    };
+    BeerComponent.prototype.refilter = function () {
+        var _this = this;
+        this.currentItems = new Array();
+        if (this.filterItems.every(function (item) { return !item.checked; })) {
+            this.currentItems = this.beerItems.filter(function (beer) { return _this.matchesSortFilter(beer); });
+        }
+        else {
+            this.currentItems = this.beerItems
+                .filter(function (beer) { return _this.matchesSortFilter(beer) && _this.matchesBrandFilter(beer); });
+        }
+    };
+    BeerComponent.prototype.matchesSortFilter = function (item) {
+        if (this.topLightDarkFilters[1] && this.topLightDarkFilters[2]) {
+            return true;
+        }
+        if (this.topLightDarkFilters[1] || this.topLightDarkFilters[2]) {
+            return item.Sort === (this.topLightDarkFilters[1] ? 'Light' : 'Dark');
+        }
+        return true;
+    };
+    BeerComponent.prototype.matchesBrandFilter = function (item) {
+        return this.filterItems.find(function (fitem) { return fitem.filter === item.BeerBrand.Name; }).checked;
     };
     BeerComponent.prototype.changeSpecificFilter = function (index) {
-        this.topLightDarkFilters[index] = !this.topLightDarkFilters[index];
+        if (index === 1 || index === 2) {
+            this.topLightDarkFilters[0] = false;
+            this.topLightDarkFilters[index] = !this.topLightDarkFilters[index];
+            this.refilter();
+        }
+        else {
+            if (this.topLightDarkFilters[0]) {
+                this.topLightDarkFilters[0] = false;
+                this.refilter();
+            }
+            else {
+                this.topLightDarkFilters[0] = true;
+                this.topLightDarkFilters[1] = false;
+                this.topLightDarkFilters[2] = false;
+                this.filterItems.forEach(function (item) { return item.checked = false; });
+                this.currentItems = this.beerItems
+                    .sort(function (x, y) { return x.Rating <= y.Rating ? 1 : -1; })
+                    .slice(0, 5);
+            }
+        }
     };
     BeerComponent.prototype.getUniqueBeerBrands = function () {
         return this.beerItems.map(function (item) { return item.BeerBrand; })

@@ -233,6 +233,7 @@ input{
     padding: 20px;
     position: relative;
     display: grid;
+    overflow: hidden;
 }
 
 .beer-filters button {
@@ -255,7 +256,7 @@ input{
     padding: 10px;
     margin-bottom: 20px;
 }
-.beer-table > .submit-item span {
+.beer-table > .submit-item span.pull-right {
     color: white;
 }
 .beer-table > .submit-item input {

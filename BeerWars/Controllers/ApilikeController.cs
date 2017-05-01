@@ -180,5 +180,19 @@ namespace BeerWars.Controllers
 
             return Json(cvm, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetBeerRatings()
+        {
+            var posts = _getInfoService.GetAllPosts();
+            var ratings = posts.GroupBy(item => item.BeerItem)
+                .Select(item => new BeerRatingViewModel
+                {
+                    BeerItemGuid = item.Key.Guid,
+                    Rating = item.Average(post => post.BeerRatingMark)
+                });
+
+            return Json(ratings, JsonRequestBehavior.AllowGet);
+        }
     }
 }

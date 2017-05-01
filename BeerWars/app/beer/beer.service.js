@@ -25,6 +25,10 @@ var BeerService = (function () {
         return this.http.post('Apilike/AddNewBeer', bodyString, options)
             .map(function (res) { return res.json(); });
     };
+    BeerService.prototype.getBeerRatings = function () {
+        return this.http.get('Apilike/GetBeerRatings')
+            .map(function (res) { return res.json(); });
+    };
     return BeerService;
 }());
 BeerService = __decorate([

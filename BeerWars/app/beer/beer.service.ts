@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { BeerItem } from '../entities/beeritem';
 import { BeerBrand } from '../entities/beerbrand';
+import { BeerRating } from '../entities/beerrating';
 
 @Injectable()
 export class BeerService {
@@ -23,5 +24,10 @@ export class BeerService {
 
         return this.http.post('Apilike/AddNewBeer', bodyString, options)
             .map((res: Response) => <BeerItem>res.json());
+    }
+
+    getBeerRatings(): Observable<BeerRating[]> {
+        return this.http.get('Apilike/GetBeerRatings')
+            .map(res => <BeerRating[]>res.json());
     }
 }

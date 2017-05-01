@@ -22,6 +22,7 @@ export class BeerComponent implements OnInit {
     beerBrands: BeerBrand[];
     beerSorts: string[] = ['Light', 'Dark'];
     brandCreation: boolean = false;
+    currentItems: BeerItem[];
     topLightDarkFilters: [boolean, boolean, boolean] = [false, false, false];
 
     constructor(
@@ -38,8 +39,18 @@ export class BeerComponent implements OnInit {
         this.beerService.getAllBeers()
             .subscribe(items => {
                 this.beerItems = items;
+                console.log(items);
+                this.beerItems.forEach(item => item.Rating = 0);
                 this.filterItems = this.generateFilterItems();
                 this.beerBrands = this.getUniqueBeerBrands();
+                this.currentItems = this.beerItems;
+                this.beerService.getBeerRatings()
+                    .subscribe(ratings => {
+                        ratings.forEach(rate => {
+                            this.beerItems.find(beer => beer.Guid === rate.BeerItemGuid)
+                                .Rating = rate.Rating/2;
+                        });
+                    })
             });
     }
 
@@ -63,11 +74,55 @@ export class BeerComponent implements OnInit {
     }
 
     changeFilterState(filter: FilterItem) {
+        this.topLightDarkFilters[0] = false;
         filter.checked = !filter.checked;
+
+        this.refilter();
+    }
+
+    refilter() {
+        this.currentItems = new Array();
+        if (this.filterItems.every(item => !item.checked)) {
+            this.currentItems = this.beerItems.filter(beer => this.matchesSortFilter(beer));
+        } else {
+            this.currentItems = this.beerItems
+                .filter(beer => this.matchesSortFilter(beer) && this.matchesBrandFilter(beer));
+        }
+    }
+
+    matchesSortFilter(item: BeerItem): boolean {
+        if (this.topLightDarkFilters[1] && this.topLightDarkFilters[2]) {
+            return true;
+        }
+        if (this.topLightDarkFilters[1] || this.topLightDarkFilters[2]) {
+            return item.Sort === (this.topLightDarkFilters[1] ? 'Light' : 'Dark');
+        } 
+        return true;
+    }
+
+    matchesBrandFilter(item: BeerItem): boolean {
+        return this.filterItems.find(fitem => fitem.filter === item.BeerBrand.Name).checked;
     }
 
     changeSpecificFilter(index: number) {
-        this.topLightDarkFilters[index] = !this.topLightDarkFilters[index];
+        if (index === 1 || index === 2) {
+            this.topLightDarkFilters[0] = false;
+            this.topLightDarkFilters[index] = !this.topLightDarkFilters[index];
+            this.refilter();
+        } else {
+            if (this.topLightDarkFilters[0]) {
+                this.topLightDarkFilters[0] = false;
+                this.refilter();
+            } else {
+                this.topLightDarkFilters[0] = true;
+                this.topLightDarkFilters[1] = false;
+                this.topLightDarkFilters[2] = false;
+                this.filterItems.forEach(item => item.checked = false);
+                this.currentItems = this.beerItems
+                    .sort((x, y) => x.Rating <= y.Rating ? 1 : -1)
+                    .slice(0, 5);
+            }
+        }
     }
 
     getUniqueBeerBrands(): BeerBrand[] {

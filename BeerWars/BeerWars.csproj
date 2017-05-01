@@ -189,6 +189,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\BeerBrandViewModel.cs" />
     <Compile Include="ViewModel\BeerItemViewModel.cs" />
+    <Compile Include="ViewModel\BeerRatingViewModel.cs" />
     <Compile Include="ViewModel\CommentViewModel.cs" />
     <Compile Include="ViewModel\IMapper.cs" />
     <Compile Include="ViewModel\LikeViewModel.cs" />
@@ -242,6 +243,7 @@
     <TypeScriptCompile Include="app\beer\beer.service.ts" />
     <TypeScriptCompile Include="app\entities\beerbrand.ts" />
     <TypeScriptCompile Include="app\entities\beeritem.ts" />
+    <TypeScriptCompile Include="app\entities\beerrating.ts" />
     <TypeScriptCompile Include="app\entities\comment.ts" />
     <TypeScriptCompile Include="app\entities\filteritem.ts" />
     <TypeScriptCompile Include="app\entities\like.ts" />
