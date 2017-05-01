@@ -1,29 +1,100 @@
-﻿<form class="form-horizontal" #dayReportForm="ngForm">
-    <input type="text" required placeholder="Enter brand name" [(ngModel)]="model.BeerBrand.Name" [ngModelOptions]="{standalone: true}"/>
-    <input type="url" required placeholder="Enter link of logo" [(ngModel)]="model.BeerBrand.LogoUrl" [ngModelOptions]="{standalone: true}"/>
-    <input type="text" required placeholder="Enter beer name" [(ngModel)]="model.Name" [ngModelOptions]="{standalone: true}"/>
-    <input type="text" required placeholder="Enter sort" [(ngModel)]="model.Sort" [ngModelOptions]="{standalone: true}"/>
+﻿<div class="beer-table">
+    <div class="submit-item">
+        <form class="form-horizontal" #dayReportForm="ngForm">
+            <input auto-complete
+                   [source]="beerBrands"
+                   [(ngModel)]="model.BeerBrand"
+                   [ngModelOptions]="{standalone: true}"
+                   [list-formatter]="autocompleListFormatter"
+                   display-property-name="Name"
+                   class="form-control"
+                   placeholder="What beer brand?" 
+                   *ngIf="!brandCreation"/>
+            
+            <ng-container *ngIf="brandCreation">
+                <input type="text" class="form-control" required 
+                       placeholder="Enter brand name" [(ngModel)]="model.BeerBrand.Name" 
+                       [ngModelOptions]="{standalone: true}" />
+                <input type="url" class="form-control" required 
+                       placeholder="Enter link of logo" [(ngModel)]="model.BeerBrand.LogoUrl" 
+                       [ngModelOptions]="{standalone: true}" />
+            </ng-container>
 
-    <button type="submit" class="btn btn-success pull-left" (click)="addNewBeer()" >
-        Submit
+            <input type="text" class="form-control" required placeholder="Enter beer name" [(ngModel)]="model.Name" [ngModelOptions]="{standalone: true}"/>
+            
+            <input auto-complete
+                   [source]="beerSorts"
+                   [(ngModel)]="model.Sort"
+                   [ngModelOptions]="{standalone: true}"
+                   [list-formatter]="autocompleteSortFormatter"
+                   class="form-control"
+                   placeholder="What beer sort?" />
+
+            <button type="submit" class="btn btn-success" (click)="addNewBeer()" >
+                Beer it!
+            </button>
+            <span class="pull-right" *ngIf="!brandCreation">Can't find needed beer brand? <a (click)="brandCreation = true;">Then add it, what's you waiting for?</a></span>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Brand name</th>
+                <th>Beer name</th>
+                <th>Beer sort</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of beerItems">
+                <td><img src="{{item.BeerBrand.LogoUrl}}" style="width:40px; height:40px"/></td>
+                <td>{{item.BeerBrand.Name}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.Sort}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="beer-filters">
+    <button class="top-rated-filter" (click)="changeSpecificFilter(0)">
+        <ng-container *ngIf="!topLightDarkFilters[0]">
+            <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);" />
+        </ng-container>
+        <ng-container *ngIf="topLightDarkFilters[0]">
+            <img src="app/icons/checked.png" style="width: 20px; filter: hue-rotate(177deg);" />
+        </ng-container>
+        Top Rated
     </button>
-</form>
+    <hr />
+    <button class="light-filter" (click)="changeSpecificFilter(1)">
+        <ng-container *ngIf="!topLightDarkFilters[1]">
+            <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);" />
+        </ng-container>
+        <ng-container *ngIf="topLightDarkFilters[1]">
+            <img src="app/icons/checked.png" style="width: 20px; filter: hue-rotate(222deg);" />
+        </ng-container>
+        Light
+    </button>
+    <button class="dark-filter" (click)="changeSpecificFilter(2)">
+        <ng-container *ngIf="!topLightDarkFilters[2]">
+            <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);" />
+        </ng-container>
+        <ng-container *ngIf="topLightDarkFilters[2]">
+            <img src="app/icons/checked.png" style="width: 20px; filter: hue-rotate(222deg);" />
+        </ng-container>
+        Dark
+    </button>
+    <hr/>
+    <button *ngFor="let filter of filterItems" (click)="changeFilterState(filter)">
+        <ng-container *ngIf="!filter.checked">
+            <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);"/>
+            {{filter.filter}}
+        </ng-container>
+        <ng-container *ngIf="filter.checked">
+            <img src="app/icons/checked.png" style="width: 20px;" />
+            {{filter.filter}}
+        </ng-container>
+    </button>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Brand name</th>
-            <th>Beer name</th>
-            <th>Beer sort</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of beerItems">
-            <td><img src="{{item.BeerBrand.LogoUrl}}" style="width:40px; height:40px"/></td>
-            <td>{{item.BeerBrand.Name}}</td>
-            <td>{{item.Name}}</td>
-            <td>{{item.Sort}}</td>
-        </tr>
-    </tbody>
-</table>
+</div>

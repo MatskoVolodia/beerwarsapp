@@ -220,3 +220,47 @@ input{
     color: green;
     margin: 0 2px 0 2px;
 }
+
+.beer-table{
+    width: 70%;
+    float:left;
+}
+
+.beer-filters {
+    width: 25%;
+    float: right;
+    background: #e1e1ea;
+    padding: 20px;
+    position: relative;
+    display: grid;
+}
+
+.beer-filters button {
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+    color: #1A1D2A;
+    background: #e1e1ea;
+    border: 2px solid white;
+    margin: 2px;
+    text-transform: uppercase;
+    outline: none;
+}
+
+.beer-filters img {
+    margin-right: 5px;
+}
+
+.beer-table > .submit-item{
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.beer-table > .submit-item span {
+    color: white;
+}
+.beer-table > .submit-item input {
+    margin-bottom: 5px;
+}
+.beer-table > .submit-item a{
+    cursor: pointer;
+}

@@ -65,6 +65,7 @@ namespace Services
             var post = _postRepository.Get(item => item.Guid == postGuid);
             var postId = post.PostId;
             _likeRepository.Delete(like => like.PostId == postId);
+            _commentRepository.Delete(comment => comment.PostId == postId);
             _postRepository.Delete(post);
         }
 

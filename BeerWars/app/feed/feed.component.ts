@@ -48,7 +48,6 @@ export class FeedComponent implements OnInit {
         this.feedService.sendPost(this.model)
             .subscribe(item => {
                 item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
-                item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
                 item.Comments = new Array();
                 item.Likes = new Array();
                 this.feedPosts.unshift(item);

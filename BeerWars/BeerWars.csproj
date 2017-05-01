@@ -243,6 +243,7 @@
     <TypeScriptCompile Include="app\entities\beerbrand.ts" />
     <TypeScriptCompile Include="app\entities\beeritem.ts" />
     <TypeScriptCompile Include="app\entities\comment.ts" />
+    <TypeScriptCompile Include="app\entities\filteritem.ts" />
     <TypeScriptCompile Include="app\entities\like.ts" />
     <TypeScriptCompile Include="app\entities\post.ts" />
     <TypeScriptCompile Include="app\entities\user.ts" />

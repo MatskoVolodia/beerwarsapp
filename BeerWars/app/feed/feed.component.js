@@ -42,7 +42,6 @@ var FeedComponent = (function () {
         this.feedService.sendPost(this.model)
             .subscribe(function (item) {
             item.DateTime = new Date(parseInt(item.DateTime.toString().substr(6)));
-            item.User.UserPictureUrl = 'app/icons/' + item.User.UserPictureUrl + '.png';
             item.Comments = new Array();
             item.Likes = new Array();
             _this.feedPosts.unshift(item);
