@@ -128,6 +128,20 @@ var BeerComponent = (function () {
             return self.findIndex(function (item) { return item.Name === value.Name; }) === index;
         });
     };
+    BeerComponent.prototype.removeBeerItem = function (item) {
+        var _this = this;
+        this.beerService.removeBeerItem(item.Guid)
+            .subscribe(function (guid) {
+            var beerBrandName = _this.beerItems.find(function (item) { return item.Guid == guid; }).BeerBrand.Name;
+            _this.beerItems.splice(_this.beerItems.findIndex(function (item) { return item.Guid == guid; }), 1);
+            _this.currentItems.splice(_this.currentItems.findIndex(function (item) { return item.Guid == guid; }), 1);
+            var wasLast = !_this.beerItems.some(function (item) { return item.BeerBrand.Name === beerBrandName; });
+            if (wasLast) {
+                _this.beerBrands.splice(_this.beerBrands.findIndex(function (item) { return item.Name === beerBrandName; }), 1);
+                _this.filterItems.splice(_this.filterItems.findIndex(function (item) { return item.filter === beerBrandName; }), 1);
+            }
+        });
+    };
     return BeerComponent;
 }());
 BeerComponent = __decorate([

@@ -30,4 +30,15 @@ export class BeerService {
         return this.http.get('Apilike/GetBeerRatings')
             .map(res => <BeerRating[]>res.json());
     }
+
+    removeBeerItem(itemGuid: string): Observable<string> {
+        let bodyString = JSON.stringify({
+            beerItemGuid: itemGuid
+        });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('Apilike/RemoveBeerItem', bodyString, options)
+            .map((res: Response) => res.json());
+    }
 }

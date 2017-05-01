@@ -143,4 +143,19 @@ export class BeerComponent implements OnInit {
         let html = `<span style="cursor: pointer" class='option-span'>${data}</span>`;
         return this._sanitizer.bypassSecurityTrustHtml(html);
     }
+
+    removeBeerItem(item: BeerItem) {
+        this.beerService.removeBeerItem(item.Guid)
+            .subscribe(guid => {
+                var beerBrandName = this.beerItems.find(item => item.Guid == guid).BeerBrand.Name;
+                this.beerItems.splice(this.beerItems.findIndex(item => item.Guid == guid), 1);
+                this.currentItems.splice(this.currentItems.findIndex(item => item.Guid == guid), 1);
+                
+                var wasLast = !this.beerItems.some(item => item.BeerBrand.Name === beerBrandName);
+                if (wasLast) {
+                    this.beerBrands.splice(this.beerBrands.findIndex(item => item.Name === beerBrandName), 1);
+                    this.filterItems.splice(this.filterItems.findIndex(item => item.filter === beerBrandName), 1);
+                }
+            })
+    }
 }

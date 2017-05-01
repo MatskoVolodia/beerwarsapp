@@ -45,6 +45,7 @@
                 <th>Beer name</th>
                 <th>Beer sort</th>
                 <th>Rating</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +65,9 @@
                             [float]="true"
                             [ngModelOptions]="{standalone: true}">
                     </rating>
+                </td>
+                <td>
+                    <img src="app/icons/delete.png" (click)="removeBeerItem(item)"/>
                 </td>
             </tr>
         </tbody>

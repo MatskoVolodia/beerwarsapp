@@ -194,5 +194,13 @@ namespace BeerWars.Controllers
 
             return Json(ratings, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult RemoveBeerItem(string beerItemGuid)
+        {
+            _highLevelManagementService.RemoveBeerItem(beerItemGuid);
+
+            return Json(beerItemGuid, JsonRequestBehavior.AllowGet);
+        }
     }
 }

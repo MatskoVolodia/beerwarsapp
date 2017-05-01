@@ -265,3 +265,8 @@ input{
 .beer-table > .submit-item a{
     cursor: pointer;
 }
+
+.beer-table > .table > tbody > tr > td > img{
+    width: 20px;
+    cursor: pointer;
+}

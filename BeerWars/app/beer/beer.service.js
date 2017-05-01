@@ -29,6 +29,15 @@ var BeerService = (function () {
         return this.http.get('Apilike/GetBeerRatings')
             .map(function (res) { return res.json(); });
     };
+    BeerService.prototype.removeBeerItem = function (itemGuid) {
+        var bodyString = JSON.stringify({
+            beerItemGuid: itemGuid
+        });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('Apilike/RemoveBeerItem', bodyString, options)
+            .map(function (res) { return res.json(); });
+    };
     return BeerService;
 }());
 BeerService = __decorate([

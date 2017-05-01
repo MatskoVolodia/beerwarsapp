@@ -17,6 +17,7 @@ namespace Services
         void Like(Like like);
         void Dislike(string likeGuid);
         void RemovePost(string postGuid);
+        void RemoveBeerItem(string beerItemGuid);
     }
 
     public class HighLevelManagementService: IHighLevelManagementService
@@ -72,6 +73,17 @@ namespace Services
         public void AddNewComment(Comment comment)
         {
             _commentRepository.Add(comment);
+        }
+
+        public void RemoveBeerItem(string beerItemGuid)
+        {
+            var beerItem = _beerItemRepository.Get(item => item.Guid == beerItemGuid);
+            var beerItemId = beerItem.BeerItemId;
+            foreach(var post in _postRepository.GetMany(item => item.BeerItemId == beerItemId))
+            {
+                RemovePost(post.Guid);
+            }
+            _beerItemRepository.Delete(beerItem);
         }
     }
 }
