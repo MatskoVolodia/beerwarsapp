@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { RatingModule } from "ngx-rating";
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -28,6 +30,9 @@ import { ModalComponent } from './modal/modal.component';
       BeerComponent,
       FeedComponent,
       ModalComponent
+    ],
+  providers: [
+      { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap:    [ AppComponent ]
 })

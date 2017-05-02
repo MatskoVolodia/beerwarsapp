@@ -18,6 +18,17 @@ var AuthService = (function () {
         return this.http.get('Apilike/GetCurrentUser')
             .map(function (res) { return res.json(); });
     };
+    AuthService.prototype.saveUserChanges = function (user) {
+        var bodyString = JSON.stringify({
+            username: user.Username,
+            url: user.UserPictureUrl,
+            warside: user.WarSide
+        });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        this.http.post('Apilike/SaveUserChanges', bodyString, options)
+            .subscribe(function (res) { return res; });
+    };
     return AuthService;
 }());
 AuthService = __decorate([

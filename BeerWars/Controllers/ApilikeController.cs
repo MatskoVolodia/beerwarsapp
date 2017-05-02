@@ -213,5 +213,11 @@ namespace BeerWars.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public void SaveUserChanges(string username, string url, bool warside)
+        {
+            this._userService.SaveUserChanges(username, url, warside);
+        }
     }
 }

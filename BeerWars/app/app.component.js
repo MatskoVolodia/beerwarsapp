@@ -15,16 +15,39 @@ var AppComponent = (function () {
     function AppComponent(authService) {
         this.authService = authService;
         this.currentUser = new user_1.User();
+        this.visible = false;
+        this.visibleAnimate = false;
+        this.picturesUrls = new Array();
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.currentUser.UserPictureUrl = 'app/icons/default.png';
+        this.currentUser.UserPictureUrl = 'default';
         this.authService.getCurrentUser()
             .subscribe(function (user) {
             _this.currentUser = user;
-            _this.currentUser.UserPictureUrl = 'app/icons/' + user.UserPictureUrl + '.png';
+            if (!user.UserPictureUrl) {
+                user.WarSide = true;
+                user.UserPictureUrl = 'icon1';
+                _this.visible = true;
+                setTimeout(function () { return _this.visibleAnimate = true; });
+            }
             console.log(_this.currentUser);
         });
+    };
+    AppComponent.prototype.changeSide = function (tf) {
+        this.currentUser.WarSide = tf;
+        var startIndex = tf ? 1 : 6;
+        this.picturesUrls = new Array();
+        this.currentUser.UserPictureUrl = "icon" + startIndex;
+        for (var i = startIndex; i < startIndex + 5; i++) {
+            this.picturesUrls.push("icon" + i);
+        }
+    };
+    AppComponent.prototype.saveChanges = function () {
+        var _this = this;
+        this.authService.saveUserChanges(this.currentUser);
+        this.visibleAnimate = false;
+        setTimeout(function () { return _this.visible = false; }, 300);
     };
     return AppComponent;
 }());

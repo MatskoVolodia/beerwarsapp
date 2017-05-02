@@ -1,11 +1,58 @@
-﻿<div class="left-side-menu col-md-2" style="padding: 0">
+﻿<div class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}"
+     [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+    <div class="modal-dialog">
+        <div class="modal-content" (click)="$event.stopPropagation();">
+            <div class="modal-body">
+                <span class="welcome">It's your first time, huh? Lets setup some stuff.</span>
+                <br/>
+                <span class="side-choose">Choose your side, young padawan!</span>
+                <hr/>
+                <button class="side-filter" (click)="changeSide(true)">
+                    <ng-container *ngIf="!currentUser.WarSide">
+                        <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);" />
+                    </ng-container>
+                    <ng-container *ngIf="currentUser.WarSide">
+                        <img src="app/icons/checked.png" style="width: 20px; filter: hue-rotate(222deg);" />
+                    </ng-container>
+                    Jedi
+                </button>
+                <button class="side-filter" (click)="changeSide(false)">
+                    <ng-container *ngIf="currentUser.WarSide">
+                        <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);" />
+                    </ng-container>
+                    <ng-container *ngIf="!currentUser.WarSide">
+                        <img src="app/icons/checked.png" style="width: 20px; filter: hue-rotate(222deg);" />
+                    </ng-container>
+                    Sith
+                </button>
+                <br/>
+                <div class="userpic-choose">
+                    <div class="userpic-item" *ngFor="let pic of picturesUrls" (click)="currentUser.UserPictureUrl = pic">
+                        <img [src]="'app/icons/' + pic + '.png'"/> <br/>
+                        <ng-container *ngIf="pic !== currentUser.UserPictureUrl">
+                            <img src="app/icons/checked.png" style="width: 20px; filter: grayscale(100%);" />
+                        </ng-container>
+                        <ng-container *ngIf="pic === currentUser.UserPictureUrl">
+                            <img src="app/icons/checked.png" style="width: 20px; filter: hue-rotate(222deg);" />
+                        </ng-container>
+                    </div>
+                </div>
+                <hr/>
+                <button class="btn btn-success" (click)="saveChanges()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="left-side-menu col-md-2" style="padding: 0">
     <div class="profile-summary col-md-12">
-        <img class="user-picture" [src]="currentUser.UserPictureUrl" routerLink="/profile"/>
+        <img class="user-picture" [src]="'app/icons/' + currentUser.UserPictureUrl + '.png'" routerLink="/profile"/>
         <h3 class="username">{{currentUser.Username}}</h3>
     </div>
     <ul>
         <li><a routerLink="/beer" routerLinkActive="active">Beer</a></li>
         <li><a routerLink="/feed" routerLinkActive="active">Feed</a></li>
+        <li><a href="Account/LogOff">Logout</a></li>
     </ul>
    
 </div>

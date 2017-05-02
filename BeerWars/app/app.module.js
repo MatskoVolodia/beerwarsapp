@@ -12,6 +12,7 @@ var app_routing_module_1 = require("./app-routing.module");
 var http_1 = require("@angular/http");
 var auto_complete_1 = require("@ngui/auto-complete");
 var ngx_rating_1 = require("ngx-rating");
+var common_1 = require("@angular/common");
 var app_component_1 = require("./app.component");
 var profile_component_1 = require("./profile/profile.component");
 var beer_component_1 = require("./beer/beer.component");
@@ -38,6 +39,9 @@ AppModule = __decorate([
             beer_component_1.BeerComponent,
             feed_component_1.FeedComponent,
             modal_component_1.ModalComponent
+        ],
+        providers: [
+            { provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }
         ],
         bootstrap: [app_component_1.AppComponent]
     })

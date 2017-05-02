@@ -26,6 +26,11 @@ namespace BeerWars.Controllers
             return View();
         }
 
+        public ActionResult SignIn()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
@@ -53,6 +58,18 @@ namespace BeerWars.Controllers
                 ModelState.AddModelError("", "The user name or password provided is incorrect.");
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SignIn(LoginViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            _userService.SignIn(model.Username, model.Password);
+
+            FormsAuthentication.SetAuthCookie(model.Username, false);
+
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult LogOff()

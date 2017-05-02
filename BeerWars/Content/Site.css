@@ -276,7 +276,7 @@ input{
     height: 100%;
     background: url('falcon.png') no-repeat;
     background-size: 50%;
-    background-position: bottom right
+    background-position: bottom right;
 }
 
 .dark-side {
@@ -335,8 +335,8 @@ input{
     background: url('falcon.png') no-repeat;
     background-size: 80%;
     background-position: bottom right;
-    color: #00b300;
-    font-size: 10rem;
+    color: #1A1D2A;
+    font-size: 6rem;
     font-weight: 700;
     text-align: center
 }
@@ -345,8 +345,8 @@ input{
     background: url('deathstar.png') no-repeat;
     background-size: 50%;
     background-position: bottom right;
-    color: red;
-    font-size: 10rem;
+    color: #1A1D2A;
+    font-size: 6rem;
     font-weight: 700;
     text-align: center
 }
@@ -354,3 +354,43 @@ input{
 .profile-content{
     overflow: hidden;
 }
+
+.left-side-menu > ul > li:last-child{
+    bottom: 0 !important;
+    position:fixed !important;
+    width: 100% !important;
+}
+
+.welcome, .side-choose {
+    color: #1A1D2A;
+    font-size: medium;
+    font-weight: 700;
+}
+
+.side-filter {
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+    color: #1A1D2A;
+    background: white;
+    border: 2px solid white;
+    margin: 2px;
+    text-transform: uppercase;
+    outline: none;
+    width: 45%;
+}
+
+.userpic-choose{
+    display: flex;
+}
+
+.userpic-choose div{
+    width: 20%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.userpic-choose div img {
+    margin-bottom: 10px;
+}
+
