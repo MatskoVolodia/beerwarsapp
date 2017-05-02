@@ -2,17 +2,20 @@
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 import { BeerService } from './beer.service';
+import { AuthService } from '../auth.service';
 
 import { BeerItem } from '../entities/beeritem';
 import { BeerBrand } from '../entities/beerbrand';
 import { FilterItem } from '../entities/filteritem';
+import { User } from '../entities/user';
 
 @Component({
     selector: 'beer',
     moduleId: module.id,
     templateUrl: './beer.component.html',
     providers: [
-        BeerService
+        BeerService,
+        AuthService
     ]
 })
 export class BeerComponent implements OnInit {
@@ -22,12 +25,14 @@ export class BeerComponent implements OnInit {
     beerBrands: BeerBrand[];
     beerSorts: string[] = ['Light', 'Dark'];
     brandCreation: boolean = false;
+    currentUser: User = new User;
     currentItems: BeerItem[];
     topLightDarkFilters: [boolean, boolean, boolean] = [false, false, false];
 
     constructor(
         private beerService: BeerService,
-        private _sanitizer: DomSanitizer
+        private _sanitizer: DomSanitizer,
+        private authService: AuthService
     ) {
         this.model = new BeerItem();
         this.model.BeerBrand = new BeerBrand();
@@ -36,22 +41,26 @@ export class BeerComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.beerService.getAllBeers()
-            .subscribe(items => {
-                this.beerItems = items;
-                console.log(items);
-                this.beerItems.forEach(item => item.Rating = 0);
-                this.filterItems = this.generateFilterItems();
-                this.beerBrands = this.getUniqueBeerBrands();
-                this.currentItems = this.beerItems;
-                this.beerService.getBeerRatings()
-                    .subscribe(ratings => {
-                        ratings.forEach(rate => {
-                            this.beerItems.find(beer => beer.Guid === rate.BeerItemGuid)
-                                .Rating = rate.Rating/2;
-                        });
-                    })
-            });
+        this.authService.getCurrentUser()
+            .subscribe(user => {
+                this.currentUser = user;
+                this.beerService.getAllBeers()
+                    .subscribe(items => {
+                        this.beerItems = items;
+                        console.log(items);
+                        this.beerItems.forEach(item => item.Rating = 0);
+                        this.filterItems = this.generateFilterItems();
+                        this.beerBrands = this.getUniqueBeerBrands();
+                        this.currentItems = this.beerItems;
+                        this.beerService.getBeerRatings()
+                            .subscribe(ratings => {
+                                ratings.forEach(rate => {
+                                    this.beerItems.find(beer => beer.Guid === rate.BeerItemGuid)
+                                        .Rating = rate.Rating/2;
+                                });
+                            })
+                    });
+            })
     }
 
     addNewBeer() {

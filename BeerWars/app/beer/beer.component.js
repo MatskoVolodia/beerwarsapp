@@ -11,16 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var beer_service_1 = require("./beer.service");
+var auth_service_1 = require("../auth.service");
 var beeritem_1 = require("../entities/beeritem");
 var beerbrand_1 = require("../entities/beerbrand");
 var filteritem_1 = require("../entities/filteritem");
+var user_1 = require("../entities/user");
 var BeerComponent = (function () {
-    function BeerComponent(beerService, _sanitizer) {
+    function BeerComponent(beerService, _sanitizer, authService) {
         var _this = this;
         this.beerService = beerService;
         this._sanitizer = _sanitizer;
+        this.authService = authService;
         this.beerSorts = ['Light', 'Dark'];
         this.brandCreation = false;
+        this.currentUser = new user_1.User;
         this.topLightDarkFilters = [false, false, false];
         this.autocompleListFormatter = function (data) {
             var html = "<span style=\"cursor: pointer\" class='option-span'>\n            <img style=\"width: 30px\" src=" + data.LogoUrl + " />\n            " + data.Name + " \n        </span>";
@@ -37,19 +41,23 @@ var BeerComponent = (function () {
     }
     BeerComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.beerService.getAllBeers()
-            .subscribe(function (items) {
-            _this.beerItems = items;
-            console.log(items);
-            _this.beerItems.forEach(function (item) { return item.Rating = 0; });
-            _this.filterItems = _this.generateFilterItems();
-            _this.beerBrands = _this.getUniqueBeerBrands();
-            _this.currentItems = _this.beerItems;
-            _this.beerService.getBeerRatings()
-                .subscribe(function (ratings) {
-                ratings.forEach(function (rate) {
-                    _this.beerItems.find(function (beer) { return beer.Guid === rate.BeerItemGuid; })
-                        .Rating = rate.Rating / 2;
+        this.authService.getCurrentUser()
+            .subscribe(function (user) {
+            _this.currentUser = user;
+            _this.beerService.getAllBeers()
+                .subscribe(function (items) {
+                _this.beerItems = items;
+                console.log(items);
+                _this.beerItems.forEach(function (item) { return item.Rating = 0; });
+                _this.filterItems = _this.generateFilterItems();
+                _this.beerBrands = _this.getUniqueBeerBrands();
+                _this.currentItems = _this.beerItems;
+                _this.beerService.getBeerRatings()
+                    .subscribe(function (ratings) {
+                    ratings.forEach(function (rate) {
+                        _this.beerItems.find(function (beer) { return beer.Guid === rate.BeerItemGuid; })
+                            .Rating = rate.Rating / 2;
+                    });
                 });
             });
         });
@@ -150,11 +158,13 @@ BeerComponent = __decorate([
         moduleId: module.id,
         templateUrl: './beer.component.html',
         providers: [
-            beer_service_1.BeerService
+            beer_service_1.BeerService,
+            auth_service_1.AuthService
         ]
     }),
     __metadata("design:paramtypes", [beer_service_1.BeerService,
-        platform_browser_1.DomSanitizer])
+        platform_browser_1.DomSanitizer,
+        auth_service_1.AuthService])
 ], BeerComponent);
 exports.BeerComponent = BeerComponent;
 //# sourceMappingURL=beer.component.js.map

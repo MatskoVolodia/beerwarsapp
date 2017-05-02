@@ -10,19 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var profile_service_1 = require("./profile.service");
+var auth_service_1 = require("../auth.service");
 var user_1 = require("../entities/user");
 var rankitem_1 = require("../entities/rankitem");
 var contribution_1 = require("../entities/contribution");
 var ProfileComponent = (function () {
-    function ProfileComponent(profileService) {
+    function ProfileComponent(profileService, authService) {
         this.profileService = profileService;
+        this.authService = authService;
         this.user = new user_1.User();
         this.ranks = new Array();
         this.usersContribution = new contribution_1.Contribution();
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.profileService.getUser('admin')
+        this.authService.getCurrentUser()
             .subscribe(function (user) {
             _this.user = user;
             _this.profileService.getUsersContribution(_this.user.Username)
@@ -45,10 +47,12 @@ ProfileComponent = __decorate([
         moduleId: module.id,
         templateUrl: './profile.component.html',
         providers: [
-            profile_service_1.ProfileService
+            profile_service_1.ProfileService,
+            auth_service_1.AuthService
         ]
     }),
-    __metadata("design:paramtypes", [profile_service_1.ProfileService])
+    __metadata("design:paramtypes", [profile_service_1.ProfileService,
+        auth_service_1.AuthService])
 ], ProfileComponent);
 exports.ProfileComponent = ProfileComponent;
 //# sourceMappingURL=profile.component.js.map

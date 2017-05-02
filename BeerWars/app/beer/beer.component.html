@@ -1,5 +1,5 @@
 ﻿<div class="beer-table">
-    <div class="submit-item">
+    <div class="submit-item" *ngIf="currentUser.Role === 'admin'">
         <form class="form-horizontal" #dayReportForm="ngForm">
             <input auto-complete
                    [source]="beerBrands"
@@ -45,7 +45,7 @@
                 <th>Beer name</th>
                 <th>Beer sort</th>
                 <th>Rating</th>
-                <th></th>
+                <th *ngIf="currentUser.Role === 'admin'"></th>
             </tr>
         </thead>
         <tbody>
@@ -66,7 +66,7 @@
                             [ngModelOptions]="{standalone: true}">
                     </rating>
                 </td>
-                <td>
+                <td *ngIf="currentUser.Role === 'admin'">
                     <img src="app/icons/delete.png" (click)="removeBeerItem(item)"/>
                 </td>
             </tr>

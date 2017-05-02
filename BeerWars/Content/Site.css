@@ -394,3 +394,18 @@ input{
     margin-bottom: 10px;
 }
 
+login-signin {
+    padding: 200px;
+}
+
+login-signin input {
+    width: 100%;
+}
+
+.signin-proposal{
+    text-align: center
+}
+
+.username{
+    font-size: 100%;
+}

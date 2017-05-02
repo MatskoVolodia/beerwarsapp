@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
 import { ProfileService } from './profile.service';
+import { AuthService } from '../auth.service';
 
 import { User } from '../entities/user';
 import { RankItem } from '../entities/rankitem';
@@ -13,7 +14,8 @@ import { Contribution } from '../entities/contribution';
     moduleId: module.id,
     templateUrl: './profile.component.html',
     providers: [
-        ProfileService
+        ProfileService,
+        AuthService
     ]
 })
 export class ProfileComponent implements OnInit {
@@ -24,11 +26,12 @@ export class ProfileComponent implements OnInit {
 
     constructor(
         private profileService: ProfileService,
+        private authService: AuthService
     ) {
     }
 
     ngOnInit() {
-        this.profileService.getUser('admin')
+        this.authService.getCurrentUser()
             .subscribe(user => {
                 this.user = user;
                 this.profileService.getUsersContribution(this.user.Username)
@@ -42,6 +45,6 @@ export class ProfileComponent implements OnInit {
                 this.ranks = this.user.WarSide ?
                     RankItemDefinitions.LightSide :
                     RankItemDefinitions.DarkSide;
-            });
+            })
     }
 }

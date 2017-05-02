@@ -65,11 +65,19 @@ namespace BeerWars.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            _userService.SignIn(model.Username, model.Password);
+            var user = _userService.GetUserInformation(model.Username);
+            
+            if(user == null)
+            {
+                _userService.SignIn(model.Username, model.Password);
+                FormsAuthentication.SetAuthCookie(model.Username, false);
+                return RedirectToAction("Index", "Home");
+            } else
+            {
+                ModelState.AddModelError("", "This username already exists.");
 
-            FormsAuthentication.SetAuthCookie(model.Username, false);
-
-            return RedirectToAction("Index", "Home");
+            }
+            return View(model);
         }
 
         public ActionResult LogOff()
