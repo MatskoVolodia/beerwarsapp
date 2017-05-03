@@ -14,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BeerComponent } from './beer/beer.component';
 import { FeedComponent } from './feed/feed.component'; 
 import { ModalComponent } from './modal/modal.component';
+import { WarComponent } from './war/war.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { ModalComponent } from './modal/modal.component';
       ProfileComponent,
       BeerComponent,
       FeedComponent,
-      ModalComponent
+      ModalComponent,
+      WarComponent
     ],
   providers: [
       { provide: LocationStrategy, useClass: HashLocationStrategy }

@@ -214,6 +214,17 @@ namespace BeerWars.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetTotalContribution()
+        {
+            var result = new ContributionViewModel();
+            var posts = _getInfoService.GetAllPosts();
+            result.LightSide = posts.Count(item => item.BeerItem.Sort == "Light");
+            result.DarkSide = posts.Count - result.LightSide;
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public void SaveUserChanges(string username, string url, bool warside)
         {

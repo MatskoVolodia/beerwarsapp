@@ -30,8 +30,7 @@ export class AppComponent implements OnInit {
             .subscribe(user => {
                 this.currentUser = user;
                 if (!user.UserPictureUrl) {
-                    user.WarSide = true;
-                    user.UserPictureUrl = 'icon1';
+                    this.changeSide(true);
 
                     this.visible = true;
                     setTimeout(() => this.visibleAnimate = true);

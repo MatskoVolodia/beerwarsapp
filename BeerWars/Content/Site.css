@@ -394,11 +394,11 @@ input{
     margin-bottom: 10px;
 }
 
-login-signin {
+.login-signin {
     padding: 200px;
 }
 
-login-signin input {
+.login-signin input {
     width: 100%;
 }
 
@@ -408,4 +408,54 @@ login-signin input {
 
 .username{
     font-size: 100%;
+}
+
+.war-wrapper {
+    height: 100%;
+    border-radius: 5px;
+    background-color: #555;
+    box-shadow: 0 0 5px 2px #555;
+    overflow: hidden;
+}
+
+.light-side-part, .dark-side-part {
+    height: 100%;
+    float: left;
+}
+
+.light-side-part {
+    background: url('light.jpg');
+    background-position-x: center;
+    background-size: cover;
+}
+
+.dark-side-part {
+    background: url('dark.jpg');
+    background-position-x: center;
+    background-size: cover;
+}
+
+.light-side-part > span, .dark-side-part > span {
+    margin: 50px;
+    font-size: x-large;
+    font-weight: 900;
+    width: 70px;
+    height: 70px;
+    padding: 15px;
+    text-align: center;
+    border-radius: 90%;  
+}
+
+.light-side-part > span {
+    float: left;
+    color: black;
+    background: white;
+    border: 1px solid black;
+    box-shadow: 0 0 10px 1px green;
+}
+.dark-side-part > span {
+    float: right;
+    color: white;
+    background: black;
+    box-shadow: 0 0 10px 1px red;
 }

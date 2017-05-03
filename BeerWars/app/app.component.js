@@ -26,8 +26,7 @@ var AppComponent = (function () {
             .subscribe(function (user) {
             _this.currentUser = user;
             if (!user.UserPictureUrl) {
-                user.WarSide = true;
-                user.UserPictureUrl = 'icon1';
+                _this.changeSide(true);
                 _this.visible = true;
                 setTimeout(function () { return _this.visibleAnimate = true; });
             }

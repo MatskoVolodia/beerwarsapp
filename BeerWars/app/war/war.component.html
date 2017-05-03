@@ -1,0 +1,10 @@
+﻿<div class="war-wrapper">
+    <div class="light-side-part" 
+         [ngStyle]="{'width': 100*totalContribution.LightSide/(totalContribution.LightSide+totalContribution.DarkSide) +'%'}">
+        <span>{{totalContribution.LightSide}}</span>
+    </div>
+    <div class="dark-side-part"
+        [ngStyle]="{'width': 100*totalContribution.DarkSide/(totalContribution.LightSide+totalContribution.DarkSide) +'%'}">
+        <span>{{totalContribution.DarkSide}}</span>
+    </div>
+</div>

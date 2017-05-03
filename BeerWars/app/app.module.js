@@ -18,6 +18,7 @@ var profile_component_1 = require("./profile/profile.component");
 var beer_component_1 = require("./beer/beer.component");
 var feed_component_1 = require("./feed/feed.component");
 var modal_component_1 = require("./modal/modal.component");
+var war_component_1 = require("./war/war.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -38,7 +39,8 @@ AppModule = __decorate([
             profile_component_1.ProfileComponent,
             beer_component_1.BeerComponent,
             feed_component_1.FeedComponent,
-            modal_component_1.ModalComponent
+            modal_component_1.ModalComponent,
+            war_component_1.WarComponent
         ],
         providers: [
             { provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }
